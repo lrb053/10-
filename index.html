@@ -130,6 +130,8 @@
       color: #333;
     }
   </style>
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
 </head>
 
 <body>
@@ -231,7 +233,27 @@
 
 <script>
 
+const LIFF_ID = "2011088879-uJOA8rZe";
+
 let selectedCard = null;
+
+  window.addEventListener("load", async () => {
+
+  try {
+
+    await liff.init({
+      liffId: LIFF_ID
+    });
+
+    console.log("LIFF initialized");
+
+  } catch (error) {
+
+    console.error("LIFF initialization failed:", error);
+
+  }
+
+});
 
 function showCard(cardNumber) {
 
