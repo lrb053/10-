@@ -276,9 +276,104 @@ function showCard(cardNumber) {
   });
 }
 
-function closePreview() {
+async function sendCard() {
 
-  document.getElementById("preview").style.display = "none";
+  if (!selectedCard) {
+    alert("กรุณาเลือกการ์ดก่อน");
+    return;
+  }
+
+  if (!liff.isLoggedIn()) {
+    liff.login();
+    return;
+  }
+
+  try {
+
+    await liff.shareTargetPicker([
+      {
+        type: "flex",
+        altText: "คุณได้รับการ์ดจากเรา",
+        contents: {
+
+          type: "bubble",
+
+          hero: {
+            type: "image",
+            url: "https://placehold.co/800x500/png",
+            size: "full",
+            aspectRatio: "8:5",
+            aspectMode: "cover"
+          },
+
+          body: {
+            type: "box",
+            layout: "vertical",
+            spacing: "md",
+
+            contents: [
+
+              {
+                type: "text",
+                text: "🎉 หัวข้อ Card 1",
+                weight: "bold",
+                size: "xl",
+                wrap: true
+              },
+
+              {
+                type: "text",
+                text: "นี่คือข้อความตัวอย่างของการ์ด เราจะเปลี่ยนเป็นข้อความจริงภายหลัง",
+                size: "md",
+                color: "#666666",
+                wrap: true
+              }
+
+            ]
+          },
+
+          footer: {
+            type: "box",
+            layout: "vertical",
+            spacing: "sm",
+
+            contents: [
+
+              {
+                type: "button",
+                style: "primary",
+                action: {
+                  type: "uri",
+                  label: "สมัครเลย",
+                  uri: "https://example.com"
+                }
+              },
+
+              {
+                type: "button",
+                style: "secondary",
+                action: {
+                  type: "uri",
+                  label: "ติดต่อเรา",
+                  uri: "https://example.com"
+                }
+              }
+
+            ]
+          }
+
+        }
+      }
+    ]);
+
+    alert("ส่งการ์ดสำเร็จแล้ว");
+
+  } catch (error) {
+
+    console.error(error);
+    alert("ไม่สามารถส่งการ์ดได้");
+
+  }
 
 }
 
