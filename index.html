@@ -2,471 +2,786 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
+
   <title>Friend Card</title>
+
+  <!-- LINE LIFF SDK -->
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
   <style>
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f6f8;
+      padding: 0;
+      background: #f5f5f5;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
       color: #222;
     }
 
-    .container {
-      max-width: 500px;
-      margin: auto;
-      padding: 20px;
+    .app {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 18px 14px 30px;
     }
 
     .header {
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 18px;
     }
 
     .header h1 {
       margin: 0;
-      font-size: 28px;
+      font-size: 24px;
+      font-weight: 700;
     }
 
     .header p {
-      margin-top: 8px;
+      margin: 7px 0 0;
+      font-size: 14px;
       color: #777;
     }
 
+    .status {
+      background: white;
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-bottom: 15px;
+      font-size: 13px;
+      text-align: center;
+      color: #666;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
     .cards {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      display: flex;
+      flex-direction: column;
       gap: 12px;
     }
 
     .card {
       background: white;
       border-radius: 16px;
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+      padding: 16px;
+      border: 2px solid transparent;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
       cursor: pointer;
-      transition: 0.2s;
+      transition: 0.15s;
     }
 
-    .card:hover {
-      transform: translateY(-2px);
+    .card:active {
+      transform: scale(0.98);
     }
 
-    .card-image {
-      width: 100%;
-      height: 130px;
-      background: #eee;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      margin-bottom: 10px;
+    .card.selected {
+      border-color: #06c755;
+      box-shadow: 0 3px 15px rgba(6,199,85,0.20);
     }
 
-    .card-name {
-      font-weight: bold;
-      font-size: 17px;
+    .card-number {
+      font-size: 13px;
+      color: #06c755;
+      font-weight: 700;
+      margin-bottom: 5px;
     }
 
-    .preview {
-      display: none;
-      margin-top: 25px;
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
     }
 
-    .preview-box {
-      background: white;
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.1);
-    }
-
-    .preview-image {
-      width: 100%;
-      height: 220px;
-      background: #eee;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 60px;
-    }
-
-    .preview-content {
-      padding: 20px;
-    }
-
-    .preview-content h2 {
-      margin-top: 0;
-    }
-
-    .preview-content p {
+    .card-description {
+      font-size: 14px;
+      line-height: 1.5;
       color: #666;
-      line-height: 1.6;
     }
 
-    .btn {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 10px;
+    .selected-text {
+      display: none;
       margin-top: 10px;
-      font-size: 16px;
-      cursor: pointer;
+      font-size: 13px;
+      color: #06c755;
+      font-weight: 600;
     }
 
-    .send-btn {
+    .card.selected .selected-text {
+      display: block;
+    }
+
+    .bottom {
+      position: sticky;
+      bottom: 0;
+      padding-top: 15px;
+      background: linear-gradient(
+        to bottom,
+        rgba(245,245,245,0),
+        #f5f5f5 20%
+      );
+    }
+
+    .send-button {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
       background: #06c755;
       color: white;
+      padding: 16px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(6,199,85,0.25);
     }
 
-    .close-btn {
-      background: #eee;
-      color: #333;
+    .send-button:active {
+      transform: scale(0.98);
+    }
+
+    .send-button:disabled {
+      background: #bdbdbd;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.success {
+      color: #06a847;
+    }
+
+    .message.error {
+      color: #d93025;
     }
   </style>
-<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
   <div class="header">
-    <h1>📤 Friend Card</h1>
-    <p>เลือกการ์ดที่ต้องการส่ง</p>
+    <h1>เลือกการ์ด</h1>
+    <p>เลือกการ์ดที่ต้องการส่งให้เพื่อน</p>
   </div>
 
-  <div class="cards">
-
-    <div class="card" onclick="showCard(1)">
-      <div class="card-image">🟦</div>
-      <div class="card-name">Card 1</div>
-    </div>
-
-    <div class="card" onclick="showCard(2)">
-      <div class="card-image">🟩</div>
-      <div class="card-name">Card 2</div>
-    </div>
-
-    <div class="card" onclick="showCard(3)">
-      <div class="card-image">🟨</div>
-      <div class="card-name">Card 3</div>
-    </div>
-
-    <div class="card" onclick="showCard(4)">
-      <div class="card-image">🟪</div>
-      <div class="card-name">Card 4</div>
-    </div>
-
-    <div class="card" onclick="showCard(5)">
-      <div class="card-image">🟥</div>
-      <div class="card-name">Card 5</div>
-    </div>
-
-    <div class="card" onclick="showCard(6)">
-      <div class="card-image">⬜</div>
-      <div class="card-name">Card 6</div>
-    </div>
-
-    <div class="card" onclick="showCard(7)">
-      <div class="card-image">🟧</div>
-      <div class="card-name">Card 7</div>
-    </div>
-
-    <div class="card" onclick="showCard(8)">
-      <div class="card-image">🟫</div>
-      <div class="card-name">Card 8</div>
-    </div>
-
-    <div class="card" onclick="showCard(9)">
-      <div class="card-image">🔵</div>
-      <div class="card-name">Card 9</div>
-    </div>
-
-    <div class="card" onclick="showCard(10)">
-      <div class="card-image">🔴</div>
-      <div class="card-name">Card 10</div>
-    </div>
-
+  <div class="status" id="status">
+    กำลังเชื่อมต่อกับ LINE...
   </div>
 
-  <div class="preview" id="preview">
+  <div class="cards" id="cards"></div>
 
-    <div class="preview-box">
+  <div class="bottom">
+    <button
+      class="send-button"
+      id="sendButton"
+      disabled
+      onclick="sendSelectedCard()"
+    >
+      📤 ส่งการ์ดนี้
+    </button>
 
-      <div class="preview-image" id="previewImage">
-        🖼️
-      </div>
-
-      <div class="preview-content">
-
-        <h2 id="previewTitle">
-          หัวข้อการ์ด
-        </h2>
-
-        <p id="previewText">
-          ข้อความสั้น ๆ ของการ์ด
-        </p>
-
-        <button class="btn send-btn" onclick="sendCard()">
-          📤 ส่งการ์ดนี้
-        </button>
-
-        <button class="btn close-btn" onclick="closePreview()">
-          ปิด
-        </button>
-
-      </div>
-
-    </div>
-
+    <div class="message" id="message"></div>
   </div>
 
 </div>
 
+
 <script>
 
-const LIFF_ID = "2011088879-uJOA8rZe";
+  /*
+   * =========================================================
+   * 1. LIFF ID
+   * =========================================================
+   *
+   * เอา LIFF ID จริงของคุณมาใส่ตรงนี้
+   *
+   * ตัวอย่าง:
+   * const LIFF_ID = "1234567890-AbCdEfGh";
+   *
+   */
 
-let selectedCard = null;
+  const LIFF_ID = "2011088879-uJOA8rZe";
 
-  window.addEventListener("load", async () => {
 
-  try {
+  /*
+   * =========================================================
+   * 2. ข้อมูลการ์ดทั้ง 10 ใบ
+   * =========================================================
+   *
+   * ตอนนี้ยังไม่ใส่รูปจริง
+   * ตามที่เราคุยกันไว้ เรื่องรูปเอาไว้ทำทีหลัง
+   */
 
-    await liff.init({
-      liffId: LIFF_ID
+  const cards = [
+    {
+      id: 1,
+      title: "Card 1",
+      description: "รายละเอียดของการ์ดที่ 1",
+      buttonText: "ดูรายละเอียด",
+      buttonUrl: "https://lrb053.github.io/MineGuide/"
+    },
+
+    {
+      id: 2,
+      title: "Card 2",
+      description: "รายละเอียดของการ์ดที่ 2",
+      buttonText: "ดูรายละเอียด",
+      buttonUrl: "https://lrb053.github.io/MineGuide/"
+    },
+
+    {
+      id: 3,
+      title: "Card 3",
+      description: "รายละเอียดของการ์ดที่ 3",
+      buttonText: "ดูรายละเอียด",
+      buttonUrl: "https://lrb053.github.io/MineGuide/"
+    },
+
+    {
+      id: 4,
+      title: "Card 4",
+      description: "รายละเอียดของการ์ดที่ 4",
+      buttonText: "ดูรายละเอียด",
+      buttonUrl: "https://lrb053.github.io/MineGuide/"
+    },
+
+    {
+      id: 5,
+      title: "Card 5",
+      description: "รายละเอียดของการ์ดที่ 5",
+      buttonText: "ดูรายละเอียด",
+      buttonUrl: "https://lrb053.github.io/MineGuide/"
+    },
+
+    {
+      id: 6,
+      title: "Card 6",
+      description: "รายละเอียดของการ์ดที่ 6",
+      buttonText: "ดูรายละเอียด",
+      buttonUrl: "https://lrb053.github.io/MineGuide/"
+    },
+
+    {
+      id: 7,
+      title: "Card 7",
+      description: "รายละเอียดของการ์ดที่ 7",
+      buttonText: "ดูรายละเอียด",
+      buttonUrl: "https://lrb053.github.io/MineGuide/"
+    },
+
+    {
+      id: 8,
+      title: "Card 8",
+      description: "รายละเอียดของการ์ดที่ 8",
+      buttonText: "ดูรายละเอียด",
+      buttonUrl: "https://lrb053.github.io/MineGuide/"
+    },
+
+    {
+      id: 9,
+      title: "Card 9",
+      description: "รายละเอียดของการ์ดที่ 9",
+      buttonText: "ดูรายละเอียด",
+      buttonUrl: "https://lrb053.github.io/MineGuide/"
+    },
+
+    {
+      id: 10,
+      title: "Card 10",
+      description: "รายละเอียดของการ์ดที่ 10",
+      buttonText: "ดูรายละเอียด",
+      buttonUrl: "https://lrb053.github.io/MineGuide/"
+    }
+  ];
+
+
+  /*
+   * =========================================================
+   * 3. ตัวแปรระบบ
+   * =========================================================
+   */
+
+  let selectedCard = null;
+
+
+  /*
+   * =========================================================
+   * 4. แสดงการ์ด 10 ใบ
+   * =========================================================
+   */
+
+  function renderCards() {
+
+    const container = document.getElementById("cards");
+
+    container.innerHTML = "";
+
+    cards.forEach(card => {
+
+      const element = document.createElement("div");
+
+      element.className = "card";
+
+      element.id = `card-${card.id}`;
+
+      element.innerHTML = `
+        <div class="card-number">
+          CARD ${card.id}
+        </div>
+
+        <div class="card-title">
+          ${escapeHtml(card.title)}
+        </div>
+
+        <div class="card-description">
+          ${escapeHtml(card.description)}
+        </div>
+
+        <div class="selected-text">
+          ✓ เลือกการ์ดนี้แล้ว
+        </div>
+      `;
+
+      element.addEventListener("click", () => {
+        selectCard(card.id);
+      });
+
+      container.appendChild(element);
+
+    });
+  }
+
+
+  /*
+   * =========================================================
+   * 5. เลือกการ์ด
+   * =========================================================
+   */
+
+  function selectCard(cardId) {
+
+    selectedCard = cards.find(card => card.id === cardId);
+
+    if (!selectedCard) {
+      return;
+    }
+
+    document.querySelectorAll(".card").forEach(card => {
+      card.classList.remove("selected");
     });
 
-    console.log("LIFF initialized");
+    const element = document.getElementById(`card-${cardId}`);
 
-  } catch (error) {
+    if (element) {
+      element.classList.add("selected");
+    }
 
-    console.error("LIFF initialization failed:", error);
+    const sendButton = document.getElementById("sendButton");
 
+    sendButton.disabled = false;
+
+    sendButton.textContent = `📤 ส่ง ${selectedCard.title}`;
+
+    clearMessage();
   }
 
-});
 
-function showCard(cardNumber) {
+  /*
+   * =========================================================
+   * 6. ส่งการ์ดผ่าน LINE Share Target Picker
+   * =========================================================
+   */
 
-  selectedCard = cardNumber;
+  async function sendSelectedCard() {
 
-  document.getElementById("preview").style.display = "block";
+    if (!selectedCard) {
 
-  document.getElementById("previewTitle").innerText =
-    "Card " + cardNumber;
+      showMessage(
+        "กรุณาเลือกการ์ดก่อน",
+        "error"
+      );
 
-  document.getElementById("previewText").innerText =
-    "นี่คือตัวอย่างข้อความของ Card " + cardNumber;
+      return;
+    }
 
-  document.getElementById("previewImage").innerText =
-    "🖼️";
 
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: "smooth"
-  });
-}
+    /*
+     * ตรวจสอบ LIFF
+     */
 
-async function sendCard() {
+    if (!liff.isLoggedIn()) {
 
-  if (!selectedCard) {
-    alert("กรุณาเลือกการ์ดก่อน");
-    return;
+      try {
+
+        liff.login();
+
+      } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+          "ไม่สามารถเข้าสู่ระบบ LINE ได้",
+          "error"
+        );
+
+      }
+
+      return;
+    }
+
+
+    /*
+     * ตรวจสอบ Share Target Picker
+     */
+
+    if (!liff.isApiAvailable("shareTargetPicker")) {
+
+      showMessage(
+        "Share Target Picker ยังไม่พร้อมใช้งาน กรุณาตรวจสอบการตั้งค่า LIFF ใน LINE Developers",
+        "error"
+      );
+
+      return;
+    }
+
+
+    /*
+     * ปิดปุ่มชั่วคราว
+     */
+
+    const sendButton = document.getElementById("sendButton");
+
+    sendButton.disabled = true;
+
+    sendButton.textContent = "กำลังเปิด LINE...";
+
+
+    try {
+
+      /*
+       * สร้าง Flex Message
+       */
+
+      const flexMessage = createFlexMessage(selectedCard);
+
+
+      /*
+       * เปิด Share Target Picker
+       */
+
+      const result = await liff.shareTargetPicker(
+        [
+          flexMessage
+        ],
+        {
+          isMultiple: false
+        }
+      );
+
+
+      /*
+       * สำเร็จ
+       */
+
+      if (result) {
+
+        showMessage(
+          `ส่ง ${selectedCard.title} สำเร็จแล้ว`,
+          "success"
+        );
+
+      } else {
+
+        showMessage(
+          "ปิดหน้าต่างเลือกผู้รับแล้ว",
+          "error"
+        );
+
+      }
+
+    } catch (error) {
+
+      console.error("Share Target Picker Error:", error);
+
+      showMessage(
+        "ไม่สามารถส่งการ์ดได้ กรุณาลองใหม่อีกครั้ง",
+        "error"
+      );
+
+    }
+
+
+    /*
+     * เปิดปุ่มกลับมา
+     */
+
+    sendButton.disabled = false;
+
+    sendButton.textContent =
+      `📤 ส่ง ${selectedCard.title}`;
   }
 
-  if (!liff.isLoggedIn()) {
-    liff.login();
-    return;
-  }
 
-  try {
+  /*
+   * =========================================================
+   * 7. สร้าง Flex Message
+   * =========================================================
+   */
 
-    await liff.shareTargetPicker([
-      {
-        type: "flex",
-        altText: "คุณได้รับการ์ดจากเรา",
-        contents: {
+  function createFlexMessage(card) {
 
-          type: "bubble",
+    return {
 
-          hero: {
-            type: "image",
-            url: "https://placehold.co/800x500/png",
-            size: "full",
-            aspectRatio: "8:5",
-            aspectMode: "cover"
-          },
+      type: "flex",
 
-          body: {
-            type: "box",
-            layout: "vertical",
-            spacing: "md",
+      altText: `${card.title}`,
 
-            contents: [
+      contents: {
 
-              {
-                type: "text",
-                text: "🎉 หัวข้อ Card 1",
-                weight: "bold",
-                size: "xl",
-                wrap: true
-              },
+        type: "bubble",
 
-              {
-                type: "text",
-                text: "นี่คือข้อความตัวอย่างของการ์ด เราจะเปลี่ยนเป็นข้อความจริงภายหลัง",
-                size: "md",
-                color: "#666666",
-                wrap: true
+        size: "mega",
+
+        body: {
+
+          type: "box",
+
+          layout: "vertical",
+
+          spacing: "md",
+
+          contents: [
+
+            {
+              type: "text",
+
+              text: card.title,
+
+              weight: "bold",
+
+              size: "xl",
+
+              wrap: true
+            },
+
+            {
+              type: "text",
+
+              text: card.description,
+
+              size: "md",
+
+              color: "#666666",
+
+              wrap: true
+            }
+
+          ]
+        },
+
+        footer: {
+
+          type: "box",
+
+          layout: "vertical",
+
+          spacing: "sm",
+
+          contents: [
+
+            {
+              type: "button",
+
+              style: "primary",
+
+              color: "#06C755",
+
+              action: {
+
+                type: "uri",
+
+                label: card.buttonText,
+
+                uri: card.buttonUrl
+
               }
+            }
 
-            ]
-          },
-
-          footer: {
-            type: "box",
-            layout: "vertical",
-            spacing: "sm",
-
-            contents: [
-
-              {
-                type: "button",
-                style: "primary",
-                action: {
-                  type: "uri",
-                  label: "สมัครเลย",
-                  uri: "https://example.com"
-                }
-              },
-
-              {
-                type: "button",
-                style: "secondary",
-                action: {
-                  type: "uri",
-                  label: "ติดต่อเรา",
-                  uri: "https://example.com"
-                }
-              }
-
-            ]
-          }
-
+          ]
         }
       }
-    ]);
-
-    alert("ส่งการ์ดสำเร็จแล้ว");
-
-  } catch (error) {
-
-    console.error(error);
-    alert("ไม่สามารถส่งการ์ดได้");
-
+    };
   }
 
-}
 
-  async function sendCard() {
+  /*
+   * =========================================================
+   * 8. เริ่มต้น LIFF
+   * =========================================================
+   */
 
-  if (!selectedCard) {
-    alert("กรุณาเลือกการ์ดก่อน");
-    return;
-  }
+  async function initializeLIFF() {
 
-  if (!liff.isLoggedIn()) {
-    liff.login();
-    return;
-  }
+    const status = document.getElementById("status");
 
-  try {
+    try {
 
-    await liff.shareTargetPicker([
-      {
-        type: "flex",
-        altText: "คุณได้รับการ์ดจากเรา",
-        contents: {
-          type: "bubble",
+      /*
+       * ตรวจว่าใส่ LIFF ID หรือยัง
+       */
 
-          hero: {
-            type: "image",
-            url: "https://placehold.co/800x500/png",
-            size: "full",
-            aspectRatio: "8:5",
-            aspectMode: "cover"
-          },
+      if (
+        !LIFF_ID ||
+        LIFF_ID === "ใส่-LIFF-ID-ของคุณตรงนี้"
+      ) {
 
-          body: {
-            type: "box",
-            layout: "vertical",
-            spacing: "md",
-            contents: [
-              {
-                type: "text",
-                text: "🎉 หัวข้อ Card 1",
-                weight: "bold",
-                size: "xl",
-                wrap: true
-              },
-              {
-                type: "text",
-                text: "นี่คือข้อความตัวอย่างของการ์ด",
-                size: "md",
-                color: "#666666",
-                wrap: true
-              }
-            ]
-          },
+        status.textContent =
+          "ยังไม่ได้ใส่ LIFF ID";
 
-          footer: {
-            type: "box",
-            layout: "vertical",
-            spacing: "sm",
-            contents: [
-              {
-                type: "button",
-                style: "primary",
-                action: {
-                  type: "uri",
-                  label: "สมัครเลย",
-                  uri: "https://example.com"
-                }
-              },
-              {
-                type: "button",
-                style: "secondary",
-                action: {
-                  type: "uri",
-                  label: "ติดต่อเรา",
-                  uri: "https://example.com"
-                }
-              }
-            ]
-          }
-        }
+        return;
       }
-    ]);
 
-    alert("ส่งการ์ดสำเร็จแล้ว");
 
-  } catch (error) {
+      /*
+       * เริ่มต้น LIFF
+       */
 
-    console.error(error);
-    alert("ไม่สามารถส่งการ์ดได้");
+      await liff.init({
+        liffId: LIFF_ID
+      });
 
+
+      /*
+       * ตรวจ Login
+       */
+
+      if (!liff.isLoggedIn()) {
+
+        status.textContent =
+          "กำลังเข้าสู่ระบบ LINE...";
+
+        liff.login();
+
+        return;
+      }
+
+
+      /*
+       * ตรวจ Share Target Picker
+       */
+
+      const shareAvailable =
+        liff.isApiAvailable("shareTargetPicker");
+
+
+      if (shareAvailable) {
+
+        status.textContent =
+          "พร้อมใช้งาน ✓";
+
+      } else {
+
+        status.textContent =
+          "เชื่อมต่อ LINE แล้ว แต่ Share Target Picker ยังไม่พร้อมใช้งาน";
+
+      }
+
+    } catch (error) {
+
+      console.error("LIFF Init Error:", error);
+
+      status.textContent =
+        "เกิดข้อผิดพลาดในการเชื่อมต่อ LINE";
+
+    }
   }
 
-}
+
+  /*
+   * =========================================================
+   * 9. ป้องกัน HTML แปลกปลอม
+   * =========================================================
+   */
+
+  function escapeHtml(text) {
+
+    return String(text)
+
+      .replace(/&/g, "&amp;")
+
+      .replace(/</g, "&lt;")
+
+      .replace(/>/g, "&gt;")
+
+      .replace(/"/g, "&quot;")
+
+      .replace(/'/g, "&#039;");
+  }
+
+
+  /*
+   * =========================================================
+   * 10. Message
+   * =========================================================
+   */
+
+  function showMessage(text, type) {
+
+    const message =
+      document.getElementById("message");
+
+    message.textContent = text;
+
+    message.className =
+      `message show ${type}`;
+  }
+
+
+  function clearMessage() {
+
+    const message =
+      document.getElementById("message");
+
+    message.textContent = "";
+
+    message.className = "message";
+  }
+
+
+  /*
+   * =========================================================
+   * 11. เริ่มระบบ
+   * =========================================================
+   */
+
+  renderCards();
+
+  initializeLIFF();
+
 </script>
 
 </body>
