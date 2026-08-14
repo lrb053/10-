@@ -65,9 +65,9 @@ const cards = [
 
   {
     id: 2,
-    title: "หัวข้อ Card 2",
+    title: "นาทีทองรับโชค",
     images: [
-      "https://placehold.co/800x500?text=Card+2"
+      "card2.jpg"
     ]
   },
 
