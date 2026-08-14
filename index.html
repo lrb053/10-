@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="th">
 
@@ -169,7 +170,8 @@
     ========================= */
 
     .message-card {
-      max-width: 500px;
+      width: 100%;
+      max-width: 560px;
       margin: auto;
       background: white;
       border-radius: 18px;
@@ -183,26 +185,32 @@
     }
 
 
+    /* 1 รูป */
+
     .preview-images.one img {
       display: block;
       width: 100%;
-      aspect-ratio: 8 / 5;
+      aspect-ratio: 4 / 3;
       object-fit: cover;
+      cursor: pointer;
     }
 
 
+    /* 2 รูป เรียงบน-ล่าง */
+
     .preview-images.two {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-direction: column;
       gap: 2px;
     }
 
 
     .preview-images.two img {
       width: 100%;
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 4 / 3;
       object-fit: cover;
       display: block;
+      cursor: pointer;
     }
 
 
@@ -274,7 +282,7 @@
 
     .status {
       margin: 15px auto;
-      max-width: 500px;
+      max-width: 560px;
       padding: 12px;
       border-radius: 10px;
       background: #fff;
@@ -313,6 +321,11 @@
 
       .card-count {
         font-size: 12px;
+      }
+
+
+      .message-card {
+        max-width: 100%;
       }
 
     }
@@ -606,14 +619,23 @@
       const imagesHtml =
         card.images
           .slice(0, 2)
-          .map(image => `
+          .map(image => {
 
-            <img
-              src="${getImageUrl(image)}"
-              alt=""
-            >
+            const imageUrl =
+              getImageUrl(image);
 
-          `)
+
+            return `
+
+              <img
+                src="${imageUrl}"
+                alt=""
+                onclick="openImage('${imageUrl}')"
+              >
+
+            `;
+
+          })
           .join("");
 
 
@@ -674,6 +696,20 @@
 
 
       hideStatus();
+
+    }
+
+
+    /* ==================================================
+       🖼️ เปิดรูปใหญ่ใน Preview
+       ================================================== */
+
+    function openImage(imageUrl) {
+
+      window.open(
+        imageUrl,
+        "_blank"
+      );
 
     }
 
@@ -854,6 +890,8 @@
 
     /* ==================================================
        🎴 สร้าง Flex Message
+       รูปใหญ่ + 2 รูปเรียงบน-ล่าง
+       + กดรูปเพื่อเปิดรูปเต็ม
        ================================================== */
 
     function createFlexMessage(card) {
@@ -885,9 +923,17 @@
 
           size: "full",
 
-          aspectRatio: "8:5",
+          aspectRatio: "4:3",
 
-          aspectMode: "cover"
+          aspectMode: "cover",
+
+          action: {
+
+            type: "uri",
+
+            uri: imageUrls[0]
+
+          }
 
         };
 
@@ -896,6 +942,7 @@
 
       /* =========================
          2 รูป
+         เรียงบน-ล่าง
          ========================= */
 
       else {
@@ -904,7 +951,7 @@
 
           type: "box",
 
-          layout: "horizontal",
+          layout: "vertical",
 
           spacing: "xs",
 
@@ -919,9 +966,17 @@
 
                 size: "full",
 
+                aspectRatio: "4:3",
+
                 aspectMode: "cover",
 
-                aspectRatio: "1:1"
+                action: {
+
+                  type: "uri",
+
+                  uri: imageUrl
+
+                }
 
               })
             )
@@ -956,6 +1011,8 @@
 
             spacing: "md",
 
+            paddingAll: "18px",
+
             contents: [
 
               {
@@ -984,6 +1041,8 @@
             layout: "vertical",
 
             spacing: "sm",
+
+            paddingAll: "16px",
 
             contents: [
 
@@ -1183,7 +1242,7 @@
 
     /* ==================================================
        🚀 เริ่ม LIFF
-    ================================================== */
+       ================================================== */
 
     async function initLIFF() {
 
@@ -1216,7 +1275,7 @@
 
     /* ==================================================
        🚀 เริ่มระบบ
-    ================================================== */
+       ================================================== */
 
     renderCards();
 
@@ -1228,3 +1287,4 @@
 </body>
 
 </html>
+```
