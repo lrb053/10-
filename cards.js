@@ -58,7 +58,8 @@ const cards = [
     id: 1,
     title: "โปรโมชั่นพิเศษสำหรับคุณ",
     images: [
-      "https://placehold.co/800x500?text=Card+1"
+      "card1-1.jpg",
+      "card1-2.jpg"
     ]
   },
 
