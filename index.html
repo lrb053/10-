@@ -12,6 +12,10 @@
 
   <title>Friend Card</title>
 
+  <!-- LINE LIFF SDK -->
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+
   <style>
 
     * {
@@ -20,10 +24,16 @@
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      background: #f5f6f8;
       color: #222;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
     }
+
 
     /* =========================
        HEADER
@@ -32,7 +42,7 @@
     .header {
       background: #06c755;
       color: white;
-      padding: 22px 15px;
+      padding: 22px 16px;
       text-align: center;
     }
 
@@ -46,15 +56,18 @@
       font-size: 14px;
     }
 
+
     /* =========================
-       CONTAINER
+       MAIN
     ========================= */
 
     .container {
-      max-width: 950px;
+      width: 100%;
+      max-width: 900px;
       margin: auto;
-      padding: 20px;
+      padding: 18px;
     }
+
 
     /* =========================
        CARD GRID
@@ -66,49 +79,201 @@
       gap: 15px;
     }
 
-    .card {
+
+    .select-card {
       background: white;
-      border-radius: 15px;
+      border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 3px 12px rgba(0,0,0,0.08);
       cursor: pointer;
       transition: transform 0.15s;
     }
 
-    .card:active {
+    .select-card:active {
       transform: scale(0.98);
     }
 
-    .card-image {
+
+    .select-card img {
+      display: block;
       width: 100%;
       aspect-ratio: 16 / 10;
       object-fit: cover;
-      display: block;
       background: #ddd;
     }
 
-    .card-content {
+
+    .select-card-content {
       padding: 14px;
     }
 
+
     .card-number {
-      font-size: 12px;
       color: #888;
+      font-size: 12px;
       margin-bottom: 5px;
     }
 
+
     .card-title {
       font-size: 17px;
-      font-weight: bold;
+      font-weight: 700;
       line-height: 1.4;
       margin-bottom: 8px;
     }
 
-    .send-count {
-      color: #06c755;
+
+    .card-count {
+      color: #06a84f;
       font-size: 13px;
-      font-weight: bold;
+      font-weight: 600;
     }
+
+
+    /* =========================
+       PREVIEW
+    ========================= */
+
+    #previewScreen {
+      display: none;
+    }
+
+
+    .back-button {
+      border: 0;
+      background: transparent;
+      font-size: 16px;
+      padding: 5px 0 15px;
+      cursor: pointer;
+    }
+
+
+    .preview-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+
+    /* =========================
+       MESSAGE CARD
+    ========================= */
+
+    .message-card {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+    }
+
+
+    .preview-images {
+      width: 100%;
+    }
+
+
+    .preview-images.one img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 8 / 5;
+      object-fit: cover;
+    }
+
+
+    .preview-images.two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+
+    .preview-images.two img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+    }
+
+
+    .message-body {
+      padding: 18px;
+    }
+
+
+    .message-body h2 {
+      margin: 0 0 10px;
+      font-size: 21px;
+      line-height: 1.4;
+    }
+
+
+    .message-body p {
+      margin: 0;
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+
+    /* =========================
+       BUTTONS
+    ========================= */
+
+    .action-area {
+      padding: 0 18px 18px;
+    }
+
+
+    .action-button {
+      display: block;
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 13px;
+      margin-top: 9px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+    }
+
+
+    .apply-button {
+      background: #06c755;
+      color: white;
+    }
+
+
+    .contact-button {
+      background: #eeeeee;
+      color: #222;
+    }
+
+
+    .send-button {
+      background: #111;
+      color: white;
+    }
+
+
+    /* =========================
+       STATUS
+    ========================= */
+
+    .status {
+      margin: 15px auto;
+      max-width: 500px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #fff;
+      text-align: center;
+      font-size: 14px;
+      display: none;
+    }
+
 
     /* =========================
        MOBILE
@@ -119,6 +284,28 @@
       .container {
         padding: 12px;
       }
+
+      .grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .select-card-content {
+        padding: 11px;
+      }
+
+      .card-title {
+        font-size: 15px;
+      }
+
+      .card-count {
+        font-size: 12px;
+      }
+
+    }
+
+
+    @media (max-width: 380px) {
 
       .grid {
         grid-template-columns: 1fr;
@@ -133,9 +320,10 @@
 
 <body>
 
-  <!-- =========================
+
+  <!-- ==================================================
        HEADER
-  ========================= -->
+  ================================================== -->
 
   <div class="header">
 
@@ -148,303 +336,259 @@
   </div>
 
 
-  <!-- =========================
-       MAIN
-  ========================= -->
 
-  <div class="container">
+  <!-- ==================================================
+       CARD LIST
+  ================================================== -->
+
+  <main
+    id="cardListScreen"
+    class="container"
+  >
 
     <div
       id="cardGrid"
       class="grid"
     ></div>
 
-  </div>
+  </main>
+
+
+
+  <!-- ==================================================
+       PREVIEW SCREEN
+  ================================================== -->
+
+  <main
+    id="previewScreen"
+    class="container"
+  >
+
+    <button
+      class="back-button"
+      onclick="backToCards()"
+    >
+      ← กลับไปเลือกการ์ด
+    </button>
+
+
+    <div class="preview-title">
+      Preview
+    </div>
+
+
+    <div
+      id="previewCard"
+      class="message-card"
+    ></div>
+
+
+    <div
+      id="statusBox"
+      class="status"
+    ></div>
+
+  </main>
+
 
 
   <script>
 
-    /*
-    ==================================================
-    🔧 ตั้งค่ากลางของระบบ
-    ==================================================
-    */
+
+    /* ==================================================
+       🔧 LIFF ID
+       ================================================== */
+
+    const LIFF_ID =
+      "2011088879-uJOA8rZe";
 
 
-    /*
-    🔗 ลิงก์ปุ่ม "สมัครสมาชิก"
 
-    แก้ตรงนี้จุดเดียว
-    การ์ดทั้ง 20 ใบจะใช้ลิงก์นี้เหมือนกัน
-    */
+    /* ==================================================
+       🔗 ลิงก์กลางของระบบ
+       
+       สมัครสมาชิก = ใช้เหมือนกันทั้ง 20 การ์ด
+       ติดต่อเรา   = ใช้เหมือนกันทั้ง 20 การ์ด
+
+       อนาคตแก้แค่ตรงนี้
+       ================================================== */
 
     const APPLY_URL =
       "https://example.com";
 
 
-    /*
-    🔗 ลิงก์ปุ่ม "ติดต่อเรา"
-
-    แก้ตรงนี้จุดเดียว
-    การ์ดทั้ง 20 ใบจะใช้ลิงก์นี้เหมือนกัน
-    */
-
     const CONTACT_URL =
       "https://example.com";
 
 
-    /*
-    ==================================================
-    🎴 ข้อมูลการ์ด 20 ใบ
-    ==================================================
 
-    แต่ละ Card แก้ได้:
+    /* ==================================================
+       🎴 ข้อมูลการ์ดทั้ง 20 ใบ
 
-    1. title
-    2. images
+       แก้เฉพาะ:
+       - title
+       - images
 
-    รูปสามารถใส่ 1 หรือ 2 รูปได้
-
-    ==================================================
-    */
-
+       images ใส่ 1 หรือ 2 รูปได้
+       ================================================== */
 
     const cards = [
 
       {
         id: 1,
-
-        title:
-          "หัวข้อ Card 1",
-
+        title: "หัวข้อ Card 1",
         images: [
           "https://placehold.co/800x500?text=Card+1"
         ]
       },
 
-
       {
         id: 2,
-
-        title:
-          "หัวข้อ Card 2",
-
+        title: "หัวข้อ Card 2",
         images: [
           "https://placehold.co/800x500?text=Card+2"
         ]
       },
 
-
       {
         id: 3,
-
-        title:
-          "หัวข้อ Card 3",
-
+        title: "หัวข้อ Card 3",
         images: [
           "https://placehold.co/800x500?text=Card+3"
         ]
       },
 
-
       {
         id: 4,
-
-        title:
-          "หัวข้อ Card 4",
-
+        title: "หัวข้อ Card 4",
         images: [
           "https://placehold.co/800x500?text=Card+4"
         ]
       },
 
-
       {
         id: 5,
-
-        title:
-          "หัวข้อ Card 5",
-
+        title: "หัวข้อ Card 5",
         images: [
           "https://placehold.co/800x500?text=Card+5"
         ]
       },
 
-
       {
         id: 6,
-
-        title:
-          "หัวข้อ Card 6",
-
+        title: "หัวข้อ Card 6",
         images: [
           "https://placehold.co/800x500?text=Card+6"
         ]
       },
 
-
       {
         id: 7,
-
-        title:
-          "หัวข้อ Card 7",
-
+        title: "หัวข้อ Card 7",
         images: [
           "https://placehold.co/800x500?text=Card+7"
         ]
       },
 
-
       {
         id: 8,
-
-        title:
-          "หัวข้อ Card 8",
-
+        title: "หัวข้อ Card 8",
         images: [
           "https://placehold.co/800x500?text=Card+8"
         ]
       },
 
-
       {
         id: 9,
-
-        title:
-          "หัวข้อ Card 9",
-
+        title: "หัวข้อ Card 9",
         images: [
           "https://placehold.co/800x500?text=Card+9"
         ]
       },
 
-
       {
         id: 10,
-
-        title:
-          "หัวข้อ Card 10",
-
+        title: "หัวข้อ Card 10",
         images: [
           "https://placehold.co/800x500?text=Card+10"
         ]
       },
 
-
       {
         id: 11,
-
-        title:
-          "หัวข้อ Card 11",
-
+        title: "หัวข้อ Card 11",
         images: [
           "https://placehold.co/800x500?text=Card+11"
         ]
       },
 
-
       {
         id: 12,
-
-        title:
-          "หัวข้อ Card 12",
-
+        title: "หัวข้อ Card 12",
         images: [
           "https://placehold.co/800x500?text=Card+12"
         ]
       },
 
-
       {
         id: 13,
-
-        title:
-          "หัวข้อ Card 13",
-
+        title: "หัวข้อ Card 13",
         images: [
           "https://placehold.co/800x500?text=Card+13"
         ]
       },
 
-
       {
         id: 14,
-
-        title:
-          "หัวข้อ Card 14",
-
+        title: "หัวข้อ Card 14",
         images: [
           "https://placehold.co/800x500?text=Card+14"
         ]
       },
 
-
       {
         id: 15,
-
-        title:
-          "หัวข้อ Card 15",
-
+        title: "หัวข้อ Card 15",
         images: [
           "https://placehold.co/800x500?text=Card+15"
         ]
       },
 
-
       {
         id: 16,
-
-        title:
-          "หัวข้อ Card 16",
-
+        title: "หัวข้อ Card 16",
         images: [
           "https://placehold.co/800x500?text=Card+16"
         ]
       },
 
-
       {
         id: 17,
-
-        title:
-          "หัวข้อ Card 17",
-
+        title: "หัวข้อ Card 17",
         images: [
           "https://placehold.co/800x500?text=Card+17"
         ]
       },
 
-
       {
         id: 18,
-
-        title:
-          "หัวข้อ Card 18",
-
+        title: "หัวข้อ Card 18",
         images: [
           "https://placehold.co/800x500?text=Card+18"
         ]
       },
 
-
       {
         id: 19,
-
-        title:
-          "หัวข้อ Card 19",
-
+        title: "หัวข้อ Card 19",
         images: [
           "https://placehold.co/800x500?text=Card+19"
         ]
       },
 
-
       {
         id: 20,
-
-        title:
-          "หัวข้อ Card 20",
-
+        title: "หัวข้อ Card 20",
         images: [
           "https://placehold.co/800x500?text=Card+20"
         ]
@@ -453,15 +597,13 @@
     ];
 
 
-    /*
-    ==================================================
-    🔢 ระบบเก็บจำนวนการส่ง
-    ==================================================
-    */
 
+    /* ==================================================
+       🔢 ระบบเก็บจำนวนการส่ง
+       ================================================== */
 
     const COUNT_KEY =
-      "friend_card_counts_v1";
+      "friend_card_counts_v2";
 
 
     function getCounts() {
@@ -472,9 +614,7 @@
           localStorage.getItem(COUNT_KEY) || "{}"
         );
 
-      }
-
-      catch (error) {
+      } catch (error) {
 
         return {};
 
@@ -483,12 +623,34 @@
     }
 
 
-    /*
-    ==================================================
-    🎴 แสดงการ์ด
-    ==================================================
-    */
+    function saveCounts(counts) {
 
+      localStorage.setItem(
+        COUNT_KEY,
+        JSON.stringify(counts)
+      );
+
+    }
+
+
+    function addCount(cardId, amount) {
+
+      const counts =
+        getCounts();
+
+      counts[cardId] =
+        Number(counts[cardId] || 0)
+        + Number(amount);
+
+      saveCounts(counts);
+
+    }
+
+
+
+    /* ==================================================
+       🎴 แสดง 20 การ์ด
+       ================================================== */
 
     function renderCards() {
 
@@ -507,7 +669,6 @@
 
       cards.forEach(card => {
 
-
         const count =
           Number(
             counts[card.id] || 0
@@ -515,34 +676,31 @@
 
 
         const element =
-          document.createElement(
-            "div"
-          );
+          document.createElement("div");
 
 
         element.className =
-          "card";
+          "select-card";
 
 
         element.innerHTML = `
 
           <img
-            class="card-image"
             src="${card.images[0]}"
             alt="Card ${card.id}"
           >
 
-          <div class="card-content">
+          <div class="select-card-content">
 
             <div class="card-number">
               CARD ${card.id}
             </div>
 
             <div class="card-title">
-              ${card.title}
+              ${escapeHtml(card.title)}
             </div>
 
-            <div class="send-count">
+            <div class="card-count">
               👥 ส่งแล้ว ${count} คน
             </div>
 
@@ -551,49 +709,678 @@
         `;
 
 
-        element.addEventListener(
-          "click",
+        element.onclick =
           function() {
 
-            openCard(card.id);
+            openPreview(card.id);
 
-          }
-        );
+          };
 
 
-        grid.appendChild(
-          element
-        );
+        grid.appendChild(element);
 
       });
 
     }
 
 
-    /*
-    ==================================================
-    👆 กด Card
-    ==================================================
-    */
 
-    function openCard(cardId) {
+    /* ==================================================
+       👀 เปิด Preview
+       ================================================== */
+
+    let selectedCardId =
+      null;
+
+
+    function openPreview(cardId) {
+
+      selectedCardId =
+        cardId;
+
+
+      const card =
+        cards.find(
+          item =>
+            item.id === cardId
+        );
+
+
+      if (!card) {
+        return;
+      }
+
+
+      document.getElementById(
+        "cardListScreen"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "previewScreen"
+      ).style.display = "block";
+
+
+      const preview =
+        document.getElementById(
+          "previewCard"
+        );
+
+
+      const imageClass =
+        card.images.length >= 2
+          ? "two"
+          : "one";
+
+
+      const imagesHtml =
+        card.images
+          .slice(0, 2)
+          .map(image => `
+            <img
+              src="${image}"
+              alt=""
+            >
+          `)
+          .join("");
+
+
+      preview.innerHTML = `
+
+        <div
+          class="preview-images ${imageClass}"
+        >
+
+          ${imagesHtml}
+
+        </div>
+
+
+        <div class="message-body">
+
+          <h2>
+            ${escapeHtml(card.title)}
+          </h2>
+
+          <p>
+            คุณกำลังดูตัวอย่างการ์ดที่จะส่งให้เพื่อน
+          </p>
+
+        </div>
+
+
+        <div class="action-area">
+
+          <a
+            class="action-button apply-button"
+            href="${APPLY_URL}"
+            target="_blank"
+          >
+            สมัครสมาชิก
+          </a>
+
+
+          <a
+            class="action-button contact-button"
+            href="${CONTACT_URL}"
+            target="_blank"
+          >
+            ติดต่อเรา
+          </a>
+
+
+          <button
+            class="action-button send-button"
+            onclick="sendCard()"
+          >
+            📤 ส่งการ์ดนี้
+          </button>
+
+        </div>
+
+      `;
+
+
+      hideStatus();
+
+    }
+
+
+
+    /* ==================================================
+       ← กลับหน้าเลือกการ์ด
+       ================================================== */
+
+    function backToCards() {
+
+      selectedCardId =
+        null;
+
+
+      document.getElementById(
+        "previewScreen"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "cardListScreen"
+      ).style.display = "block";
+
+
+      hideStatus();
+
+    }
+
+
+
+    /* ==================================================
+       📤 ส่ง Flex Card ผ่าน LINE
+       ================================================== */
+
+    async function sendCard() {
+
+      if (!selectedCardId) {
+
+        alert(
+          "กรุณาเลือกการ์ดก่อน"
+        );
+
+        return;
+
+      }
+
+
+      const card =
+        cards.find(
+          item =>
+            item.id === selectedCardId
+        );
+
+
+      if (!card) {
+
+        alert(
+          "ไม่พบข้อมูลการ์ด"
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        showStatus(
+          "กำลังเตรียมการส่ง..."
+        );
+
+
+        /*
+         * ตรวจสอบว่า LIFF พร้อมหรือยัง
+         */
+
+        if (
+          !liff.isInClient() &&
+          !liff.isLoggedIn()
+        ) {
+
+          liff.login();
+
+          return;
+
+        }
+
+
+        /*
+         * ตรวจสอบ Share Target Picker
+         */
+
+        if (
+          !liff.isApiAvailable(
+            "shareTargetPicker"
+          )
+        ) {
+
+          hideStatus();
+
+          alert(
+            "อุปกรณ์หรือสภาพแวดล้อมนี้ไม่รองรับ Share Target Picker"
+          );
+
+          return;
+
+        }
+
+
+        /*
+         * สร้าง Flex Message
+         */
+
+        const flexMessage =
+          createFlexMessage(card);
+
+
+        showStatus(
+          "กำลังเปิดรายชื่อเพื่อน..."
+        );
+
+
+        /*
+         * เปิด Share Target Picker
+         */
+
+        const result =
+          await liff.shareTargetPicker(
+            [
+              flexMessage
+            ]
+          );
+
+
+        /*
+         * LINE ไม่ส่งรายชื่อผู้รับกลับมาให้เว็บ
+         * ดังนั้นหลังส่งสำเร็จ เราจะถามจำนวนผู้รับ
+         */
+
+        hideStatus();
+
+
+        if (
+          result &&
+          result.status === "success"
+        ) {
+
+          recordSentCount();
+
+        }
+
+        else {
+
+          /*
+           * บางเวอร์ชันอาจไม่ได้ส่ง status กลับมา
+           * แต่ถ้า Promise สำเร็จ ให้ถือว่าส่งเสร็จ
+           */
+
+          recordSentCount();
+
+        }
+
+
+      } catch (error) {
+
+        console.error(
+          "Share Target Picker Error:",
+          error
+        );
+
+
+        hideStatus();
+
+
+        alert(
+          "ไม่สามารถส่งการ์ดได้\n\n" +
+          "รายละเอียด: " +
+          (error.message || error)
+        );
+
+      }
+
+    }
+
+
+
+    /* ==================================================
+       🎴 สร้าง Flex Message
+       ================================================== */
+
+    function createFlexMessage(card) {
+
+      const imageContents =
+        card.images
+          .slice(0, 2)
+          .map(image => ({
+
+            type: "image",
+
+            url: image,
+
+            size: "full",
+
+            aspectMode: "cover",
+
+            aspectRatio: "1:1"
+
+          }));
+
+
+      let hero;
+
+
+      if (
+        imageContents.length === 1
+      ) {
+
+        hero = {
+
+          type: "image",
+
+          url: card.images[0],
+
+          size: "full",
+
+          aspectRatio: "8:5",
+
+          aspectMode: "cover"
+
+        };
+
+      }
+
+      else {
+
+        hero = {
+
+          type: "box",
+
+          layout: "horizontal",
+
+          spacing: "xs",
+
+          contents: imageContents
+
+        };
+
+      }
+
+
+      return {
+
+        type: "flex",
+
+        altText:
+          card.title,
+
+        contents: {
+
+          type: "bubble",
+
+          size: "mega",
+
+
+          hero: hero,
+
+
+          body: {
+
+            type: "box",
+
+            layout: "vertical",
+
+            spacing: "md",
+
+            contents: [
+
+              {
+
+                type: "text",
+
+                text: card.title,
+
+                weight: "bold",
+
+                size: "xl",
+
+                wrap: true
+
+              }
+
+            ]
+
+          },
+
+
+          footer: {
+
+            type: "box",
+
+            layout: "vertical",
+
+            spacing: "sm",
+
+            contents: [
+
+              {
+
+                type: "button",
+
+                style: "primary",
+
+                height: "sm",
+
+                action: {
+
+                  type: "uri",
+
+                  label:
+                    "สมัครสมาชิก",
+
+                  uri:
+                    APPLY_URL
+
+                }
+
+              },
+
+
+              {
+
+                type: "button",
+
+                style: "secondary",
+
+                height: "sm",
+
+                action: {
+
+                  type: "uri",
+
+                  label:
+                    "ติดต่อเรา",
+
+                  uri:
+                    CONTACT_URL
+
+                }
+
+              }
+
+            ]
+
+          }
+
+        }
+
+      };
+
+    }
+
+
+
+    /* ==================================================
+       🔢 บันทึกจำนวนผู้รับ
+       ================================================== */
+
+    function recordSentCount() {
+
+      const answer =
+        prompt(
+          "ส่งการ์ดนี้ให้กี่คน?\n\n" +
+          "เช่น ถ้าเลือกเพื่อน 20 คน ให้ใส่ 20"
+        );
+
+
+      if (
+        answer === null
+      ) {
+
+        alert(
+          "ส่งการ์ดแล้ว แต่ยังไม่ได้บันทึกจำนวน"
+        );
+
+        return;
+
+      }
+
+
+      const amount =
+        Number(
+          String(answer).trim()
+        );
+
+
+      if (
+        !Number.isInteger(amount) ||
+        amount < 0
+      ) {
+
+        alert(
+          "จำนวนไม่ถูกต้อง"
+        );
+
+        return;
+
+      }
+
+
+      addCount(
+        selectedCardId,
+        amount
+      );
+
+
+      renderCards();
+
 
       alert(
-        "เลือก Card " +
-        cardId +
-        " แล้ว"
+        "บันทึกแล้ว +" +
+        amount +
+        " คน"
       );
 
     }
 
 
-    /*
-    ==================================================
-    🚀 เริ่มระบบ
-    ==================================================
-    */
+
+    /* ==================================================
+       🔤 ป้องกัน HTML
+       ================================================== */
+
+    function escapeHtml(text) {
+
+      return String(text)
+
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+
+        .replace(
+          /</g,
+          "&lt;"
+        )
+
+        .replace(
+          />/g,
+          "&gt;"
+        )
+
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+
+    /* ==================================================
+       ℹ️ STATUS
+       ================================================== */
+
+    function showStatus(message) {
+
+      const box =
+        document.getElementById(
+          "statusBox"
+        );
+
+
+      box.textContent =
+        message;
+
+
+      box.style.display =
+        "block";
+
+    }
+
+
+    function hideStatus() {
+
+      const box =
+        document.getElementById(
+          "statusBox"
+        );
+
+
+      box.style.display =
+        "none";
+
+    }
+
+
+
+    /* ==================================================
+       🚀 เริ่ม LIFF
+       ================================================== */
+
+    async function initLIFF() {
+
+      try {
+
+        await liff.init({
+          liffId: LIFF_ID
+        });
+
+        console.log(
+          "LIFF initialized"
+        );
+
+      } catch (error) {
+
+        console.error(
+          "LIFF initialization failed:",
+          error
+        );
+
+      }
+
+    }
+
+
+
+    /* ==================================================
+       🚀 เริ่มระบบ
+       ================================================== */
 
     renderCards();
+
+    initLIFF();
 
   </script>
 
