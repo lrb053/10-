@@ -19,7 +19,7 @@ const LIFF_ID = "2011088879-uJOA8rZe";
 // ใช้เหมือนกันทั้ง 20 การ์ด
 // =====================================================
 
-const APPLY_URL = "https://example.com";
+const APPLY_URL = "https://a2j.rthnn.com/register/EMMA";
 
 
 // =====================================================
@@ -28,7 +28,7 @@ const APPLY_URL = "https://example.com";
 // ใช้เหมือนกันทั้ง 20 การ์ด
 // =====================================================
 
-const CONTACT_URL = "https://example.com";
+const CONTACT_URL = "https://lin.ee/zKCELcI";
 
 
 // =====================================================
