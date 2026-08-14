@@ -1,2010 +1,772 @@
 <!DOCTYPE html>
-
 <html lang="th">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
-/>
-
-<title>Friend Card</title>
-
-<script
-  src="https://static.line-scdn.net/liff/edge/2/sdk.js">
-</script>
-
-
-<style>
-
-* {
-  box-sizing: border-box;
-}
-
-
-body {
-
-  margin: 0;
-
-  background: #f5f6f8;
-
-  color: #222;
-
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-
-}
-
-
-.app {
-
-  width: 100%;
-
-  max-width: 680px;
-
-  margin: auto;
-
-  padding:
-    20px
-    14px
-    40px;
-
-}
-
-
-.header {
-
-  text-align: center;
-
-  margin-bottom: 20px;
-
-}
-
-
-.header .icon {
-
-  font-size: 40px;
-
-}
-
-
-.header h1 {
-
-  margin:
-    4px
-    0;
-
-  font-size: 27px;
-
-}
-
-
-.header p {
-
-  margin: 0;
-
-  color: #777;
-
-  font-size: 14px;
-
-}
-
-
-.status {
-
-  background: white;
-
-  border-radius: 14px;
-
-  padding: 12px;
-
-  margin-bottom: 16px;
-
-  text-align: center;
-
-  font-size: 13px;
-
-  color: #777;
-
-}
-
-
-.grid {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, 1fr);
-
-  gap: 12px;
-
-}
-
-
-.card {
-
-  position: relative;
-
-  background: white;
-
-  border:
-    2px solid
-    transparent;
-
-  border-radius: 17px;
-
-  overflow: hidden;
-
-  box-shadow:
-    0
-    3px
-    12px
-    rgba(0,0,0,.06);
-
-  cursor: pointer;
-
-}
-
-
-.card.selected {
-
-  border-color:
-    #06c755;
-
-}
-
-
-.card img {
-
-  display: block;
-
-  width: 100%;
-
-  aspect-ratio: 1 / 1;
-
-  object-fit: cover;
-
-}
-
-
-.card-body {
-
-  padding: 11px;
-
-}
-
-
-.card-number {
-
-  color: #06c755;
-
-  font-size: 11px;
-
-  font-weight: 800;
-
-}
-
-
-.card-title {
-
-  margin-top: 3px;
-
-  font-size: 16px;
-
-  font-weight: 800;
-
-}
-
-
-.card-description {
-
-  margin-top: 4px;
-
-  color: #777;
-
-  font-size: 12px;
-
-}
-
-
-.check {
-
-  display: none;
-
-  position: absolute;
-
-  right: 8px;
-
-  top: 8px;
-
-  width: 28px;
-
-  height: 28px;
-
-  border-radius: 50%;
-
-  background: #06c755;
-
-  color: white;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-weight: bold;
-
-}
-
-
-.card.selected .check {
-
-  display: flex;
-
-}
-
-
-.preview {
-
-  display: none;
-
-  margin-top: 24px;
-
-}
-
-
-.preview.show {
-
-  display: block;
-
-}
-
-
-.preview-title {
-
-  text-align: center;
-
-  font-size: 20px;
-
-  font-weight: 800;
-
-  margin-bottom: 12px;
-
-}
-
-
-.flex-preview {
-
-  background: white;
-
-  border-radius: 20px;
-
-  overflow: hidden;
-
-  box-shadow:
-    0
-    5px
-    20px
-    rgba(0,0,0,.10);
-
-}
-
-
-.preview-image {
-
-  width: 100%;
-
-  display: block;
-
-}
-
-
-.preview-body {
-
-  padding: 18px;
-
-}
-
-
-.preview-body h2 {
-
-  margin:
-    0
-    0
-    8px;
-
-  font-size: 21px;
-
-}
-
-
-.preview-body p {
-
-  margin: 0;
-
-  color: #666;
-
-  line-height: 1.5;
-
-  white-space: pre-line;
-
-}
-
-
-.preview-buttons {
-
-  padding:
-    0
-    18px
-    18px;
-
-}
-
-
-.preview-buttons button {
-
-  width: 100%;
-
-  border: 0;
-
-  border-radius: 10px;
-
-  padding: 12px;
-
-  margin-top: 8px;
-
-  font-weight: 700;
-
-}
-
-
-.apply {
-
-  background: #06c755;
-
-  color: white;
-
-}
-
-
-.contact {
-
-  background: #eee;
-
-}
-
-
-.send-area {
-
-  margin-top: 18px;
-
-}
-
-
-.send-info {
-
-  text-align: center;
-
-  color: #666;
-
-  font-size: 14px;
-
-  margin-bottom: 9px;
-
-}
-
-
-.send {
-
-  width: 100%;
-
-  border: 0;
-
-  border-radius: 15px;
-
-  padding: 16px;
-
-  background: #06c755;
-
-  color: white;
-
-  font-size: 17px;
-
-  font-weight: 800;
-
-}
-
-
-.send:disabled {
-
-  background: #c8ccd0;
-
-}
-
-
-.dashboard {
-
-  margin-top: 28px;
-
-  background: white;
-
-  border-radius: 17px;
-
-  padding: 16px;
-
-}
-
-
-.dashboard h2 {
-
-  margin:
-    0
-    0
-    14px;
-
-  font-size: 19px;
-
-}
-
-
-.stats {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  gap: 8px;
-
-}
-
-
-.stat {
-
-  background: #f5f6f8;
-
-  border-radius: 11px;
-
-  padding: 10px;
-
-  text-align: center;
-
-}
-
-
-.stat strong {
-
-  display: block;
-
-  font-size: 20px;
-
-}
-
-
-.stat span {
-
-  font-size: 11px;
-
-  color: #777;
-
-}
-
-
-.message {
-
-  display: none;
-
-  margin-top: 14px;
-
-  padding: 12px;
-
-  border-radius: 12px;
-
-  text-align: center;
-
-  font-size: 13px;
-
-}
-
-
-.message.show {
-
-  display: block;
-
-}
-
-
-.success {
-
-  background: #e9f9ef;
-
-  color: #087b36;
-
-}
-
-
-.error {
-
-  background: #fff0f0;
-
-  color: #c62828;
-
-}
-
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Friend Card</title>
+
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans Thai", sans-serif;
+      background: #f5f6f8;
+      color: #222;
+    }
+
+    .header {
+      background: white;
+      padding: 18px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .header p {
+      margin: 6px 0 0;
+      font-size: 13px;
+      color: #777;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #e1e1e1;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .card:active {
+      transform: scale(0.98);
+    }
+
+    .card img {
+      width: 100%;
+      aspect-ratio: 1.5;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-content {
+      padding: 12px;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .card-description {
+      font-size: 13px;
+      color: #777;
+      margin-top: 5px;
+      line-height: 1.4;
+    }
+
+    .preview {
+      display: none;
+    }
+
+    .back-button {
+      border: none;
+      background: transparent;
+      font-size: 16px;
+      color: #06c755;
+      padding: 0;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+
+    .preview-box {
+      max-width: 430px;
+      margin: auto;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .preview-image {
+      width: 100%;
+      display: block;
+      aspect-ratio: 1.6;
+      object-fit: cover;
+    }
+
+    .preview-body {
+      padding: 18px;
+    }
+
+    .preview-title {
+      font-size: 21px;
+      font-weight: bold;
+      line-height: 1.35;
+    }
+
+    .preview-text {
+      margin-top: 10px;
+      color: #666;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    .buttons {
+      padding: 0 18px 18px;
+    }
+
+    .action-button {
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      border: none;
+      margin-top: 9px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+    }
+
+    .apply {
+      background: #06c755;
+      color: white;
+    }
+
+    .contact {
+      background: #edf0f4;
+      color: #222;
+    }
+
+    .send {
+      background: #111827;
+      color: white;
+      margin-top: 18px;
+    }
+
+    .status {
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      margin-top: 10px;
+      min-height: 20px;
+    }
+
+    @media (max-width: 500px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .card-title {
+        font-size: 15px;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
-
-<div class="app">
-
-
   <div class="header">
+    <h1>📤 Friend Card</h1>
+    <p>เลือกการ์ดที่ต้องการส่งให้เพื่อน</p>
+  </div>
 
-    <div class="icon">
-      🎴
+
+  <!-- ========================= -->
+  <!-- หน้าเลือกการ์ด -->
+  <!-- ========================= -->
+
+  <div id="homePage" class="container">
+
+    <div class="title">
+      🎴 เลือกการ์ด
     </div>
 
-    <h1>
-      Friend Card
-    </h1>
-
-    <p>
-      เลือกการ์ดที่ต้องการส่งให้เพื่อน
-    </p>
+    <div id="cards" class="cards"></div>
 
   </div>
 
 
-  <div
-    id="status"
-    class="status"
-  >
-    กำลังเชื่อมต่อ LINE...
-  </div>
+  <!-- ========================= -->
+  <!-- หน้า Preview -->
+  <!-- ========================= -->
 
+  <div id="previewPage" class="container preview">
 
-  <div
-    id="grid"
-    class="grid"
-  ></div>
+    <button class="back-button" onclick="goBack()">
+      ← กลับไปเลือกการ์ด
+    </button>
 
-
-  <div
-    id="preview"
-    class="preview"
-  >
-
-    <div class="preview-title">
+    <div class="title">
       Preview
     </div>
 
-    <div
-      id="previewBox"
-      class="flex-preview"
-    ></div>
+    <div id="previewBox" class="preview-box"></div>
+
+    <div id="sendStatus" class="status"></div>
 
   </div>
-
-
-  <div class="send-area">
-
-    <div
-      id="sendInfo"
-      class="send-info"
-    >
-      กรุณาเลือกการ์ด
-    </div>
-
-    <button
-      id="sendButton"
-      class="send"
-      disabled
-      onclick="sendCard()"
-    >
-      📤 ส่งการ์ด
-    </button>
-
-  </div>
-
-
-  <div
-    id="message"
-    class="message"
-  ></div>
-
-
-  <div class="dashboard">
-
-    <h2>
-      📊 สถานะการส่งของคุณ
-    </h2>
-
-    <div
-      id="stats"
-    ></div>
-
-  </div>
-
-
-</div>
 
 
 <script>
 
-
-/*
-=========================================================
-  CONFIG
-=========================================================
-*/
-
-
-const LIFF_ID =
-  "2011088879-uJOA8rZe";
-
-
-const API_URL =
-  "https://YOUR-WORKER.workers.dev";
-
-
-/*
-  เปลี่ยน YOUR-WORKER.workers.dev
-  เป็น URL Worker จริงของคุณ
-*/
-
-
-/*
-=========================================================
-  CARD DATA
-=========================================================
-*/
-
-
-const cards = [
-
-  {
-    id: 1,
-
-    title: "Card 1",
-
-    description:
-      "ข้อความตัวอย่าง Card 1",
-
-    images: [
-      "https://placehold.co/1200x700/png?text=Card+1"
-    ],
-
-    applyText:
-      "สมัครเลย",
-
-    applyUrl:
-      "https://lrb053.github.io/MineGuide/",
-
-    contactText:
-      "ติดต่อเรา",
-
-    contactUrl:
-      "https://lrb053.github.io/MineGuide/"
-
-  },
-
-
-  {
-    id: 2,
-
-    title: "Card 2",
-
-    description:
-      "ข้อความตัวอย่าง Card 2",
-
-    images: [
-      "https://placehold.co/1200x700/png?text=Card+2"
-    ],
-
-    applyText:
-      "สมัครเลย",
-
-    applyUrl:
-      "https://lrb053.github.io/MineGuide/",
-
-    contactText:
-      "ติดต่อเรา",
-
-    contactUrl:
-      "https://lrb053.github.io/MineGuide/"
-
-  },
-
-
-  {
-    id: 3,
-
-    title: "Card 3",
-
-    description:
-      "ข้อความตัวอย่าง Card 3",
-
-    images: [
-      "https://placehold.co/1200x700/png?text=Card+3"
-    ],
-
-    applyText:
-      "สมัครเลย",
-
-    applyUrl:
-      "https://lrb053.github.io/MineGuide/",
-
-    contactText:
-      "ติดต่อเรา",
-
-    contactUrl:
-      "https://lrb053.github.io/MineGuide/"
-
-  },
-
-
-  {
-    id: 4,
-
-    title: "Card 4",
-
-    description:
-      "ข้อความตัวอย่าง Card 4",
-
-    images: [
-      "https://placehold.co/1200x700/png?text=Card+4"
-    ],
-
-    applyText:
-      "สมัครเลย",
-
-    applyUrl:
-      "https://lrb053.github.io/MineGuide/",
-
-    contactText:
-      "ติดต่อเรา",
-
-    contactUrl:
-      "https://lrb053.github.io/MineGuide/"
-
-  },
-
-
-  {
-    id: 5,
-
-    title: "Card 5",
-
-    description:
-      "ข้อความตัวอย่าง Card 5",
-
-    images: [
-      "https://placehold.co/1200x700/png?text=Card+5"
-    ],
-
-    applyText:
-      "สมัครเลย",
-
-    applyUrl:
-      "https://lrb053.github.io/MineGuide/",
-
-    contactText:
-      "ติดต่อเรา",
-
-    contactUrl:
-      "https://lrb053.github.io/MineGuide/"
-
-  },
-
-
-  {
-    id: 6,
-
-    title: "Card 6",
-
-    description:
-      "ข้อความตัวอย่าง Card 6",
-
-    images: [
-      "https://placehold.co/1200x700/png?text=Card+6"
-    ],
-
-    applyText:
-      "สมัครเลย",
-
-    applyUrl:
-      "https://lrb053.github.io/MineGuide/",
-
-    contactText:
-      "ติดต่อเรา",
-
-    contactUrl:
-      "https://lrb053.github.io/MineGuide/"
-
-  },
-
-
-  {
-    id: 7,
-
-    title: "Card 7",
-
-    description:
-      "ข้อความตัวอย่าง Card 7",
-
-    images: [
-      "https://placehold.co/1200x700/png?text=Card+7"
-    ],
-
-    applyText:
-      "สมัครเลย",
-
-    applyUrl:
-      "https://lrb053.github.io/MineGuide/",
-
-    contactText:
-      "ติดต่อเรา",
-
-    contactUrl:
-      "https://lrb053.github.io/MineGuide/"
-
-  },
-
-
-  {
-    id: 8,
-
-    title: "Card 8",
-
-    description:
-      "ข้อความตัวอย่าง Card 8",
-
-    images: [
-      "https://placehold.co/1200x700/png?text=Card+8"
-    ],
-
-    applyText:
-      "สมัครเลย",
-
-    applyUrl:
-      "https://lrb053.github.io/MineGuide/",
-
-    contactText:
-      "ติดต่อเรา",
-
-    contactUrl:
-      "https://lrb053.github.io/MineGuide/"
-
-  },
-
-
-  {
-    id: 9,
-
-    title: "Card 9",
-
-    description:
-      "ข้อความตัวอย่าง Card 9",
-
-    images: [
-      "https://placehold.co/1200x700/png?text=Card+9"
-    ],
-
-    applyText:
-      "สมัครเลย",
-
-    applyUrl:
-      "https://lrb053.github.io/MineGuide/",
-
-    contactText:
-      "ติดต่อเรา",
-
-    contactUrl:
-      "https://lrb053.github.io/MineGuide/"
-
-  },
-
-
-  {
-    id: 10,
-
-    title: "Card 10",
-
-    description:
-      "ข้อความตัวอย่าง Card 10",
-
-    images: [
-      "https://placehold.co/1200x700/png?text=Card+10"
-    ],
-
-    applyText:
-      "สมัครเลย",
-
-    applyUrl:
-      "https://lrb053.github.io/MineGuide/",
-
-    contactText:
-      "ติดต่อเรา",
-
-    contactUrl:
-      "https://lrb053.github.io/MineGuide/"
-
-  }
-
-];
-
-
-let selectedCard = null;
-
-let idToken = null;
-
-
-/*
-=========================================================
-  START
-=========================================================
-*/
-
-
-document.addEventListener(
-  "DOMContentLoaded",
-  async () => {
-
-    renderCards();
-
-    await initLIFF();
-
-  }
-);
-
-
-/*
-=========================================================
-  LIFF
-=========================================================
-*/
-
-
-async function initLIFF() {
-
-  try {
-
-    await liff.init({
-      liffId: LIFF_ID
-    });
-
-
-    if (
-      !liff.isLoggedIn()
-    ) {
-
-      liff.login();
-
-      return;
-
+  /*
+  ========================================
+  LIFF ID ของเรา
+  ========================================
+  */
+
+  const LIFF_ID = "2011088879-uJOA8rZe";
+
+
+  /*
+  ========================================
+  ข้อมูล Card ทั้ง 10 ใบ
+  ========================================
+  */
+
+  const cards = [
+
+    {
+      id: 1,
+      title: "Card 1",
+      image: "https://placehold.co/900x560/png?text=Card+1",
+      headline: "🎉 หัวข้อ Card 1",
+      text: "ข้อความตัวอย่างสำหรับ Card 1",
+      applyUrl: "https://example.com",
+      contactUrl: "https://example.com"
+    },
+
+    {
+      id: 2,
+      title: "Card 2",
+      image: "https://placehold.co/900x560/png?text=Card+2",
+      headline: "🎉 หัวข้อ Card 2",
+      text: "ข้อความตัวอย่างสำหรับ Card 2",
+      applyUrl: "https://example.com",
+      contactUrl: "https://example.com"
+    },
+
+    {
+      id: 3,
+      title: "Card 3",
+      image: "https://placehold.co/900x560/png?text=Card+3",
+      headline: "🎉 หัวข้อ Card 3",
+      text: "ข้อความตัวอย่างสำหรับ Card 3",
+      applyUrl: "https://example.com",
+      contactUrl: "https://example.com"
+    },
+
+    {
+      id: 4,
+      title: "Card 4",
+      image: "https://placehold.co/900x560/png?text=Card+4",
+      headline: "🎉 หัวข้อ Card 4",
+      text: "ข้อความตัวอย่างสำหรับ Card 4",
+      applyUrl: "https://example.com",
+      contactUrl: "https://example.com"
+    },
+
+    {
+      id: 5,
+      title: "Card 5",
+      image: "https://placehold.co/900x560/png?text=Card+5",
+      headline: "🎉 หัวข้อ Card 5",
+      text: "ข้อความตัวอย่างสำหรับ Card 5",
+      applyUrl: "https://example.com",
+      contactUrl: "https://example.com"
+    },
+
+    {
+      id: 6,
+      title: "Card 6",
+      image: "https://placehold.co/900x560/png?text=Card+6",
+      headline: "🎉 หัวข้อ Card 6",
+      text: "ข้อความตัวอย่างสำหรับ Card 6",
+      applyUrl: "https://example.com",
+      contactUrl: "https://example.com"
+    },
+
+    {
+      id: 7,
+      title: "Card 7",
+      image: "https://placehold.co/900x560/png?text=Card+7",
+      headline: "🎉 หัวข้อ Card 7",
+      text: "ข้อความตัวอย่างสำหรับ Card 7",
+      applyUrl: "https://example.com",
+      contactUrl: "https://example.com"
+    },
+
+    {
+      id: 8,
+      title: "Card 8",
+      image: "https://placehold.co/900x560/png?text=Card+8",
+      headline: "🎉 หัวข้อ Card 8",
+      text: "ข้อความตัวอย่างสำหรับ Card 8",
+      applyUrl: "https://example.com",
+      contactUrl: "https://example.com"
+    },
+
+    {
+      id: 9,
+      title: "Card 9",
+      image: "https://placehold.co/900x560/png?text=Card+9",
+      headline: "🎉 หัวข้อ Card 9",
+      text: "ข้อความตัวอย่างสำหรับ Card 9",
+      applyUrl: "https://example.com",
+      contactUrl: "https://example.com"
+    },
+
+    {
+      id: 10,
+      title: "Card 10",
+      image: "https://placehold.co/900x560/png?text=Card+10",
+      headline: "🎉 หัวข้อ Card 10",
+      text: "ข้อความตัวอย่างสำหรับ Card 10",
+      applyUrl: "https://example.com",
+      contactUrl: "https://example.com"
     }
 
-
-    idToken =
-      liff.getIDToken();
+  ];
 
 
-    if (!idToken) {
+  /*
+  ========================================
+  แสดง Card 1-10
+  ========================================
+  */
 
-      throw new Error(
-        "ไม่พบ ID Token"
-      );
+  function showCards() {
 
-    }
+    const container = document.getElementById("cards");
 
+    container.innerHTML = "";
 
-    await fetchMe();
+    cards.forEach(card => {
 
+      const element = document.createElement("div");
 
-    await loadDashboard();
+      element.className = "card";
 
+      element.innerHTML = `
+        <img src="${card.image}">
+        <div class="card-content">
+          <div class="card-title">
+            ${card.title}
+          </div>
 
-    document
-      .getElementById("status")
-      .textContent =
-        "เชื่อมต่อ LINE แล้ว ✓";
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    showMessage(
-      error.message ||
-      "ไม่สามารถเชื่อมต่อ LINE ได้",
-      "error"
-    );
-
-    document
-      .getElementById("status")
-      .textContent =
-        "เชื่อมต่อไม่สำเร็จ";
-
-  }
-
-}
-
-
-/*
-=========================================================
-  REGISTER USER
-=========================================================
-*/
-
-
-async function fetchMe() {
-
-  const response =
-    await fetch(
-      `${API_URL}/api/me`,
-      {
-
-        method: "POST",
-
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-
-        body: JSON.stringify({
-          idToken
-        })
-
-      }
-    );
-
-
-  const data =
-    await response.json();
-
-
-  if (!data.ok) {
-
-    throw new Error(
-      data.error ||
-      "ไม่สามารถลงทะเบียนผู้ใช้"
-    );
-
-  }
-
-}
-
-
-/*
-=========================================================
-  RENDER CARDS
-=========================================================
-*/
-
-
-function renderCards() {
-
-  const grid =
-    document.getElementById(
-      "grid"
-    );
-
-
-  grid.innerHTML = "";
-
-
-  cards.forEach(card => {
-
-    const element =
-      document.createElement(
-        "div"
-      );
-
-
-    element.className =
-      "card";
-
-
-    element.dataset.id =
-      card.id;
-
-
-    element.innerHTML = `
-
-      <div class="check">
-        ✓
-      </div>
-
-      <img
-        src="${card.images[0]}"
-        alt=""
-      >
-
-      <div class="card-body">
-
-        <div class="card-number">
-          CARD ${card.id}
+          <div class="card-description">
+            ${card.text}
+          </div>
         </div>
+      `;
 
-        <div class="card-title">
-          ${escapeHtml(card.title)}
-        </div>
+      element.onclick = function() {
 
-        <div class="card-description">
-          ${escapeHtml(card.description)}
-        </div>
+        openPreview(card.id);
 
-      </div>
+      };
 
-    `;
-
-
-    element.onclick =
-      () => selectCard(card.id);
-
-
-    grid.appendChild(element);
-
-  });
-
-}
-
-
-/*
-=========================================================
-  SELECT
-=========================================================
-*/
-
-
-function selectCard(id) {
-
-  selectedCard =
-    cards.find(
-      card => card.id === id
-    );
-
-
-  if (!selectedCard) {
-    return;
-  }
-
-
-  document
-    .querySelectorAll(".card")
-    .forEach(card => {
-
-      card.classList.remove(
-        "selected"
-      );
+      container.appendChild(element);
 
     });
 
-
-  const element =
-    document.querySelector(
-      `.card[data-id="${id}"]`
-    );
-
-
-  if (element) {
-
-    element.classList.add(
-      "selected"
-    );
-
   }
 
 
-  document
-    .getElementById("sendInfo")
-    .textContent =
-      `เลือก ${selectedCard.title} แล้ว`;
+  /*
+  ========================================
+  เปิด Preview
+  ========================================
+  */
 
+  function openPreview(id) {
 
-  document
-    .getElementById("sendButton")
-    .disabled = false;
+    const card = cards.find(c => c.id === id);
 
+    if (!card) return;
 
-  document
-    .getElementById("sendButton")
-    .textContent =
-      `📤 ส่ง ${selectedCard.title}`;
+    document.getElementById("homePage").style.display = "none";
 
+    document.getElementById("previewPage").style.display = "block";
 
-  renderPreview(
-    selectedCard
-  );
+    document.getElementById("sendStatus").innerText = "";
 
-
-  document
-    .getElementById("preview")
-    .scrollIntoView({
-      behavior: "smooth"
-    });
-
-}
-
-
-/*
-=========================================================
-  PREVIEW
-=========================================================
-*/
-
-
-function renderPreview(card) {
-
-  const box =
-    document.getElementById(
-      "previewBox"
-    );
-
-
-  const images =
-    card.images
-      .slice(0, 2)
-      .map(
-        image =>
-          `<img
-             class="preview-image"
-             src="${image}"
-             alt=""
-           >`
-      )
-      .join("");
-
-
-  box.innerHTML = `
-
-    ${images}
-
-    <div class="preview-body">
-
-      <h2>
-        ${escapeHtml(card.title)}
-      </h2>
-
-      <p>
-        ${escapeHtml(card.description)}
-      </p>
-
-    </div>
-
-    <div class="preview-buttons">
-
-      <button
-        class="apply"
-        onclick="openUrl('${escapeJs(card.applyUrl)}')"
-      >
-        ${escapeHtml(card.applyText)}
-      </button>
-
-      <button
-        class="contact"
-        onclick="openUrl('${escapeJs(card.contactUrl)}')"
-      >
-        ${escapeHtml(card.contactText)}
-      </button>
-
-    </div>
-
-  `;
-
-
-  document
-    .getElementById("preview")
-    .classList.add("show");
-
-}
-
-
-/*
-=========================================================
-  CREATE TOKEN
-=========================================================
-*/
-
-
-async function createShareToken() {
-
-  const response =
-    await fetch(
-      `${API_URL}/api/share`,
-      {
-
-        method: "POST",
-
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-
-        body: JSON.stringify({
-
-          idToken,
-
-          cardId:
-            selectedCard.id
-
-        })
-
-      }
-    );
-
-
-  const data =
-    await response.json();
-
-
-  if (!data.ok) {
-
-    throw new Error(
-      data.error ||
-      "สร้าง Token ไม่สำเร็จ"
-    );
-
-  }
-
-
-  return data;
-
-}
-
-
-/*
-=========================================================
-  SEND
-=========================================================
-*/
-
-
-async function sendCard() {
-
-  if (!selectedCard) {
-
-    showMessage(
-      "กรุณาเลือกการ์ดก่อน",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  if (
-    !liff.isApiAvailable(
-      "shareTargetPicker"
-    )
-  ) {
-
-    showMessage(
-      "Share Target Picker ยังไม่พร้อมใช้งาน",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  const button =
-    document.getElementById(
-      "sendButton"
-    );
-
-
-  button.disabled = true;
-
-  button.textContent =
-    "กำลังเตรียมการ์ด...";
-
-
-  try {
-
-    /*
-    ---------------------------------------------------------
-      สร้าง Token ก่อนส่ง
-    ---------------------------------------------------------
-    */
-
-    const share =
-      await createShareToken();
-
-
-    /*
-    ---------------------------------------------------------
-      Flex
-    ---------------------------------------------------------
-    */
-
-    const flex =
-      createFlex(
-        selectedCard,
-        share.openUrl
-      );
-
-
-    /*
-    ---------------------------------------------------------
-      เปิด Target Picker
-    ---------------------------------------------------------
-    */
-
-    const result =
-      await liff.shareTargetPicker(
-        [flex],
-        {
-          isMultiple: false
-        }
-      );
-
-
-    if (result) {
-
-      showMessage(
-        `ส่ง ${selectedCard.title} สำเร็จแล้ว 📤`,
-        "success"
-      );
-
-
-      await loadDashboard();
-
-
-    } else {
-
-      showMessage(
-        "ยกเลิกการส่ง",
-        "error"
-      );
-
-    }
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    showMessage(
-      error.message ||
-      "ส่งการ์ดไม่สำเร็จ",
-      "error"
-    );
-
-  }
-
-
-  button.disabled = false;
-
-  button.textContent =
-    `📤 ส่ง ${selectedCard.title}`;
-
-}
-
-
-/*
-=========================================================
-  CREATE FLEX
-=========================================================
-*/
-
-
-function createFlex(
-  card,
-  openUrl
-) {
-
-  const imageContents =
-    card.images
-      .slice(0, 2)
-      .map(
-        image => ({
-
-          type:
-            "image",
-
-          url:
-            image,
-
-          size:
-            "full",
-
-          aspectRatio:
-            "16:9",
-
-          aspectMode:
-            "cover"
-
-        })
-      );
-
-
-  return {
-
-    type:
-      "flex",
-
-    altText:
-      card.title,
-
-    contents: {
-
-      type:
-        "bubble",
-
-      size:
-        "mega",
-
-
-      body: {
-
-        type:
-          "box",
-
-        layout:
-          "vertical",
-
-        paddingAll:
-          "0",
-
-        contents: [
-
-          ...imageContents,
-
-
-          {
-
-            type:
-              "box",
-
-            layout:
-              "vertical",
-
-            paddingAll:
-              "18px",
-
-            contents: [
-
-              {
-
-                type:
-                  "text",
-
-                text:
-                  card.title,
-
-                weight:
-                  "bold",
-
-                size:
-                  "xl",
-
-                wrap:
-                  true
-
-              },
-
-
-              {
-
-                type:
-                  "text",
-
-                text:
-                  card.description,
-
-                color:
-                  "#666666",
-
-                wrap:
-                  true,
-
-                margin:
-                  "md"
-
-              }
-
-            ]
-
-          }
-
-        ]
-
-      },
-
-
-      footer: {
-
-        type:
-          "box",
-
-        layout:
-          "vertical",
-
-        spacing:
-          "sm",
-
-        paddingAll:
-          "15px",
-
-        contents: [
-
-          {
-
-            type:
-              "button",
-
-            style:
-              "primary",
-
-            color:
-              "#06C755",
-
-            action: {
-
-              type:
-                "uri",
-
-              label:
-                card.applyText,
-
-              uri:
-                card.applyUrl
-
-            }
-
-          },
-
-
-          {
-
-            type:
-              "button",
-
-            style:
-              "secondary",
-
-            action: {
-
-              type:
-                "uri",
-
-              label:
-                card.contactText,
-
-              uri:
-                card.contactUrl
-
-            }
-
-          },
-
-
-          {
-
-            type:
-              "button",
-
-            style:
-              "link",
-
-            action: {
-
-              type:
-                "uri",
-
-              label:
-                "ดูการ์ด",
-
-              uri:
-                openUrl
-
-            }
-
-          }
-
-        ]
-
-      }
-
-    }
-
-  };
-
-}
-
-
-/*
-=========================================================
-  DASHBOARD
-=========================================================
-*/
-
-
-async function loadDashboard() {
-
-  if (!idToken) {
-    return;
-  }
-
-
-  try {
-
-    const response =
-      await fetch(
-        `${API_URL}/api/dashboard`,
-        {
-
-          method:
-            "POST",
-
-          headers: {
-
-            "Content-Type":
-              "application/json"
-
-          },
-
-          body:
-            JSON.stringify({
-              idToken
-            })
-
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if (!data.ok) {
-      return;
-    }
-
-
-    renderDashboard(
-      data.cards
-    );
-
-
-  } catch (error) {
-
-    console.error(
-      "Dashboard error:",
-      error
-    );
-
-  }
-
-}
-
-
-/*
-=========================================================
-  RENDER DASHBOARD
-=========================================================
-*/
-
-
-function renderDashboard(
-  stats
-) {
-
-  const element =
-    document.getElementById(
-      "stats"
-    );
-
-
-  element.innerHTML = "";
-
-
-  stats.forEach(stat => {
-
-    const box =
-      document.createElement(
-        "div"
-      );
-
-
-    box.style.marginBottom =
-      "14px";
-
+    const box = document.getElementById("previewBox");
 
     box.innerHTML = `
 
-      <div
-        style="
-          font-weight:800;
-          margin-bottom:7px;
-        "
+      <img
+        class="preview-image"
+        src="${card.image}"
       >
-        Card ${stat.cardId}
+
+      <div class="preview-body">
+
+        <div class="preview-title">
+          ${card.headline}
+        </div>
+
+        <div class="preview-text">
+          ${card.text}
+        </div>
+
       </div>
 
-      <div class="stats">
+      <div class="buttons">
 
-        <div class="stat">
+        <a
+          class="action-button apply"
+          href="${card.applyUrl}"
+          target="_blank"
+        >
+          สมัครเลย
+        </a>
 
-          <strong>
-            ${stat.sent}
-          </strong>
+        <a
+          class="action-button contact"
+          href="${card.contactUrl}"
+          target="_blank"
+        >
+          ติดต่อเรา
+        </a>
 
-          <span>
-            📤 ส่งแล้ว
-          </span>
-
-        </div>
-
-
-        <div class="stat">
-
-          <strong>
-            ${stat.opened}
-          </strong>
-
-          <span>
-            ✅ เปิดแล้ว
-          </span>
-
-        </div>
-
-
-        <div class="stat">
-
-          <strong>
-            ${stat.notOpened}
-          </strong>
-
-          <span>
-            ⏳ ยังไม่เปิด
-          </span>
-
-        </div>
+        <button
+          class="action-button send"
+          onclick="sendCard(${card.id})"
+        >
+          📤 ส่งการ์ดนี้
+        </button>
 
       </div>
 
     `;
 
-
-    element.appendChild(
-      box
-    );
-
-  });
-
-}
+  }
 
 
-/*
-=========================================================
-  URL
-=========================================================
-*/
+  /*
+  ========================================
+  กลับหน้าเลือก Card
+  ========================================
+  */
+
+  function goBack() {
+
+    document.getElementById("previewPage").style.display = "none";
+
+    document.getElementById("homePage").style.display = "block";
+
+  }
 
 
-function openUrl(url) {
+  /*
+  ========================================
+  สร้าง Flex Message
+  ========================================
+  */
 
-  window.open(
-    url,
-    "_blank"
-  );
+  function createFlex(card) {
 
-}
+    return {
+
+      type: "flex",
+
+      altText: card.headline,
+
+      contents: {
+
+        type: "bubble",
+
+        hero: {
+
+          type: "image",
+
+          url: card.image,
+
+          size: "full",
+
+          aspectRatio: "16:10",
+
+          aspectMode: "cover"
+
+        },
+
+        body: {
+
+          type: "box",
+
+          layout: "vertical",
+
+          spacing: "md",
+
+          contents: [
+
+            {
+
+              type: "text",
+
+              text: card.headline,
+
+              weight: "bold",
+
+              size: "xl",
+
+              wrap: true
+
+            },
+
+            {
+
+              type: "text",
+
+              text: card.text,
+
+              size: "md",
+
+              color: "#666666",
+
+              wrap: true
+
+            }
+
+          ]
+
+        },
+
+        footer: {
+
+          type: "box",
+
+          layout: "vertical",
+
+          spacing: "sm",
+
+          contents: [
+
+            {
+
+              type: "button",
+
+              style: "primary",
+
+              action: {
+
+                type: "uri",
+
+                label: "สมัครเลย",
+
+                uri: card.applyUrl
+
+              }
+
+            },
+
+            {
+
+              type: "button",
+
+              style: "secondary",
+
+              action: {
+
+                type: "uri",
+
+                label: "ติดต่อเรา",
+
+                uri: card.contactUrl
+
+              }
+
+            }
+
+          ]
+
+        }
+
+      }
+
+    };
+
+  }
 
 
-/*
-=========================================================
-  MESSAGE
-=========================================================
-*/
+  /*
+  ========================================
+  ส่ง Card
+  ========================================
+  */
+
+  async function sendCard(id) {
+
+    const card = cards.find(c => c.id === id);
+
+    if (!card) return;
+
+    const status = document.getElementById("sendStatus");
+
+    status.innerText = "กำลังเตรียมส่ง...";
+
+    try {
+
+      /*
+      ถ้ายังไม่ได้ Login
+      */
+
+      if (!liff.isLoggedIn()) {
+
+        liff.login();
+
+        return;
+
+      }
 
 
-function showMessage(
-  text,
-  type
-) {
+      /*
+      ตรวจว่า Share Target Picker ใช้งานได้หรือไม่
+      */
 
-  const element =
-    document.getElementById(
-      "message"
-    );
+      if (!liff.isApiAvailable("shareTargetPicker")) {
 
+        status.innerText =
+          "Share Target Picker ยังไม่พร้อมใช้งาน";
 
-  element.textContent =
-    text;
+        return;
 
-
-  element.className =
-    `message show ${type}`;
-
-}
+      }
 
 
-/*
-=========================================================
-  ESCAPE
-=========================================================
-*/
+      /*
+      สร้าง Flex
+      */
+
+      const flexMessage = createFlex(card);
 
 
-function escapeHtml(
-  value
-) {
+      /*
+      เปิดเลือกเพื่อน
+      */
 
-  return String(value)
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
+      const result =
+        await liff.shareTargetPicker(
+          [flexMessage],
+          {
+            isMultiple: false
+          }
+        );
 
 
-function escapeJs(
-  value
-) {
+      /*
+      สำเร็จ
+      */
 
-  return String(value)
+      if (result) {
 
-    .replace(
-      /\\/g,
-      "\\\\"
-    )
+        status.innerText =
+          "ส่งการ์ดสำเร็จแล้ว ✅";
 
-    .replace(
-      /'/g,
-      "\\'"
-    )
+      }
 
-    .replace(
-      /\n/g,
-      "\\n"
-    )
+    }
 
-    .replace(
-      /\r/g,
-      "\\r"
-    );
+    catch (error) {
 
-}
+      console.error(error);
+
+      status.innerText =
+        "ส่งไม่สำเร็จ: " +
+        (error.message || "Unknown error");
+
+    }
+
+  }
+
+
+  /*
+  ========================================
+  เริ่มต้น LIFF
+  ========================================
+  */
+
+  async function initLIFF() {
+
+    try {
+
+      await liff.init({
+        liffId: LIFF_ID
+      });
+
+      console.log("LIFF initialized");
+
+      showCards();
+
+    }
+
+    catch (error) {
+
+      console.error("LIFF INIT ERROR", error);
+
+      document.getElementById("cards").innerHTML = `
+        <div style="
+          grid-column:1/-1;
+          background:white;
+          padding:20px;
+          border-radius:15px;
+          text-align:center;
+        ">
+          LOAD FAILED
+          <br><br>
+          ${error.message || ""}
+        </div>
+      `;
+
+    }
+
+  }
+
+
+  /*
+  ========================================
+  เริ่มระบบ
+  ========================================
+  */
+
+  initLIFF();
 
 </script>
 
-
 </body>
-
 </html>
