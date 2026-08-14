@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="th">
 
@@ -107,7 +106,7 @@
     .select-card img {
       display: block;
       width: 100%;
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 1 / 1;
       object-fit: cover;
       background: #ddd;
     }
@@ -185,7 +184,14 @@
     }
 
 
-    /* 1 รูป */
+    /* =========================
+       1 รูป
+       ========================= */
+
+    .preview-images.one {
+      width: 100%;
+    }
+
 
     .preview-images.one img {
       display: block;
@@ -196,23 +202,43 @@
     }
 
 
-    /* 2 รูป เรียงบน-ล่าง */
+    /* =========================
+       2 รูป
+       เรียงบน-ล่าง
+       ========================= */
 
     .preview-images.two {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 0;
+      width: 100%;
     }
 
 
     .preview-images.two img {
+      display: block;
       width: 100%;
       aspect-ratio: 1 / 1;
       object-fit: cover;
-      display: block;
       cursor: pointer;
     }
 
+
+    /* =========================
+       IMAGE LINK
+    ========================= */
+
+    .image-link {
+      display: block;
+      width: 100%;
+      text-decoration: none;
+      line-height: 0;
+    }
+
+
+    /* =========================
+       MESSAGE BODY
+    ========================= */
 
     .message-body {
       padding: 18px;
@@ -616,6 +642,11 @@
           : "one";
 
 
+      /* ----------------------------------------------
+         รูปทั้งหมดใน Preview
+         แตะรูป = ไป APPLY_URL
+      ---------------------------------------------- */
+
       const imagesHtml =
         card.images
           .slice(0, 2)
@@ -627,11 +658,18 @@
 
             return `
 
-              <img
-                src="${imageUrl}"
-                alt=""
-                onclick="openImage('${imageUrl}')"
+              <a
+                class="image-link"
+                href="${APPLY_URL}"
+                target="_blank"
               >
+
+                <img
+                  src="${imageUrl}"
+                  alt=""
+                >
+
+              </a>
 
             `;
 
@@ -696,20 +734,6 @@
 
 
       hideStatus();
-
-    }
-
-
-    /* ==================================================
-       🖼️ เปิดรูปใหญ่ใน Preview
-       ================================================== */
-
-    function openImage(imageUrl) {
-
-      window.open(
-        imageUrl,
-        "_blank"
-      );
 
     }
 
@@ -890,8 +914,17 @@
 
     /* ==================================================
        🎴 สร้าง Flex Message
-       รูปใหญ่ + 2 รูปเรียงบน-ล่าง
-       + กดรูปเพื่อเปิดรูปเต็ม
+       
+       1 รูป:
+       - 1:1
+       - เต็มความกว้าง
+       - แตะรูป → APPLY_URL
+
+       2 รูป:
+       - 1:1 ทั้งคู่
+       - เรียงบน-ล่าง
+       - เต็มความกว้าง
+       - แตะรูป → APPLY_URL
        ================================================== */
 
     function createFlexMessage(card) {
@@ -931,7 +964,7 @@
 
             type: "uri",
 
-            uri: imageUrls[0]
+            uri: APPLY_URL
 
           }
 
@@ -953,7 +986,7 @@
 
           layout: "vertical",
 
-          spacing: "xs",
+          spacing: "none",
 
           contents:
 
@@ -966,7 +999,7 @@
 
                 size: "full",
 
-                aspectRatio: "4:3",
+                aspectRatio: "1:1",
 
                 aspectMode: "cover",
 
@@ -974,7 +1007,7 @@
 
                   type: "uri",
 
-                  uri: imageUrl
+                  uri: APPLY_URL
 
                 }
 
@@ -1287,4 +1320,3 @@
 </body>
 
 </html>
-```
