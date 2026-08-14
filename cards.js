@@ -40,7 +40,8 @@ const CONTACT_URL = "https://lin.ee/zKCELcI";
 // ตัวอย่าง 1 รูป:
 //
 // images: [
-//   "URL รูป"
+    "card2-1.jpg",
+    "card2-2.jpg"
 // ]
 //
 // ตัวอย่าง 2 รูป:
