@@ -12,7 +12,6 @@ const LIFF_ID = "2011088879-uJOA8rZe";
 
 // =====================================================
 // 🔗 ลิงก์สมัครสมาชิก
-// ใช้เหมือนกันทั้ง 20 การ์ด
 // =====================================================
 
 const APPLY_URL =
@@ -21,7 +20,6 @@ const APPLY_URL =
 
 // =====================================================
 // 🔗 ลิงก์ติดต่อเรา
-// ใช้เหมือนกันทั้ง 20 การ์ด
 // =====================================================
 
 const CONTACT_URL =
@@ -29,14 +27,13 @@ const CONTACT_URL =
 
 
 // =====================================================
-// 🎴 ข้อมูลการ์ด 20 ใบ
+// 🎴 ข้อมูลการ์ด
+// =====================================================
 //
 // title       = หัวข้อ
 // description = รายละเอียด
-// images      = รูป 1 หรือ 2 รูป
+// images      = 1 หรือ 2 รูป
 //
-// รูปจะเป็น 1:1 ในข้อความ LINE
-// ถ้ามี 2 รูป จะเรียงบน-ล่าง
 // =====================================================
 
 const cards = [
@@ -48,7 +45,8 @@ const cards = [
       "โปรโมชั่นพิเศษสำหรับคุณ",
 
     description:
-      "พบกับโปรโมชั่นพิเศษสำหรับสมาชิกใหม่ พร้อมสิทธิประโยชน์มากมาย ได้ที่ 🔰A2J เว็บตรงอันดับ1💰💎 "
+      "พบกับโปรโมชั่นพิเศษสำหรับสมาชิกใหม่ สมัครวันนี้ รับสิทธิประโยชน์และข้อเสนอสุดพิเศษสำหรับคุณ",
+
     images: [
       "card1-1.jpg",
       "card1-2.jpg"
@@ -63,7 +61,7 @@ const cards = [
       "นาทีทองรับโชค",
 
     description:
-      "พบกับโปรโมชั่นพิเศษสำหรับสมาชิก พร้อมสิทธิประโยชน์มากมาย",
+      "โอกาสพิเศษสำหรับคุณ สมัครสมาชิกวันนี้ เพื่อรับสิทธิ์และโปรโมชั่นที่น่าสนใจ",
 
     images: [
       "card2.jpg"
@@ -78,10 +76,10 @@ const cards = [
       "หัวข้อ Card 3",
 
     description:
-      "รายละเอียด Card 3",
+      "รายละเอียดของ Card 3 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+3"
+      "card3.jpg"
     ]
   },
 
@@ -93,10 +91,10 @@ const cards = [
       "หัวข้อ Card 4",
 
     description:
-      "รายละเอียด Card 4",
+      "รายละเอียดของ Card 4 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+4"
+      "card4.jpg"
     ]
   },
 
@@ -108,10 +106,10 @@ const cards = [
       "หัวข้อ Card 5",
 
     description:
-      "รายละเอียด Card 5",
+      "รายละเอียดของ Card 5 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+5"
+      "card5.jpg"
     ]
   },
 
@@ -123,10 +121,10 @@ const cards = [
       "หัวข้อ Card 6",
 
     description:
-      "รายละเอียด Card 6",
+      "รายละเอียดของ Card 6 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+6"
+      "card6.jpg"
     ]
   },
 
@@ -138,10 +136,10 @@ const cards = [
       "หัวข้อ Card 7",
 
     description:
-      "รายละเอียด Card 7",
+      "รายละเอียดของ Card 7 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+7"
+      "card7.jpg"
     ]
   },
 
@@ -153,10 +151,10 @@ const cards = [
       "หัวข้อ Card 8",
 
     description:
-      "รายละเอียด Card 8",
+      "รายละเอียดของ Card 8 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+8"
+      "card8.jpg"
     ]
   },
 
@@ -168,10 +166,10 @@ const cards = [
       "หัวข้อ Card 9",
 
     description:
-      "รายละเอียด Card 9",
+      "รายละเอียดของ Card 9 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+9"
+      "card9.jpg"
     ]
   },
 
@@ -183,10 +181,10 @@ const cards = [
       "หัวข้อ Card 10",
 
     description:
-      "รายละเอียด Card 10",
+      "รายละเอียดของ Card 10 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+10"
+      "card10.jpg"
     ]
   },
 
@@ -198,10 +196,10 @@ const cards = [
       "หัวข้อ Card 11",
 
     description:
-      "รายละเอียด Card 11",
+      "รายละเอียดของ Card 11 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+11"
+      "card11.jpg"
     ]
   },
 
@@ -213,10 +211,10 @@ const cards = [
       "หัวข้อ Card 12",
 
     description:
-      "รายละเอียด Card 12",
+      "รายละเอียดของ Card 12 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+12"
+      "card12.jpg"
     ]
   },
 
@@ -228,10 +226,10 @@ const cards = [
       "หัวข้อ Card 13",
 
     description:
-      "รายละเอียด Card 13",
+      "รายละเอียดของ Card 13 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+13"
+      "card13.jpg"
     ]
   },
 
@@ -243,10 +241,10 @@ const cards = [
       "หัวข้อ Card 14",
 
     description:
-      "รายละเอียด Card 14",
+      "รายละเอียดของ Card 14 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+14"
+      "card14.jpg"
     ]
   },
 
@@ -258,10 +256,10 @@ const cards = [
       "หัวข้อ Card 15",
 
     description:
-      "รายละเอียด Card 15",
+      "รายละเอียดของ Card 15 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+15"
+      "card15.jpg"
     ]
   },
 
@@ -273,10 +271,10 @@ const cards = [
       "หัวข้อ Card 16",
 
     description:
-      "รายละเอียด Card 16",
+      "รายละเอียดของ Card 16 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+16"
+      "card16.jpg"
     ]
   },
 
@@ -288,10 +286,10 @@ const cards = [
       "หัวข้อ Card 17",
 
     description:
-      "รายละเอียด Card 17",
+      "รายละเอียดของ Card 17 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+17"
+      "card17.jpg"
     ]
   },
 
@@ -303,10 +301,10 @@ const cards = [
       "หัวข้อ Card 18",
 
     description:
-      "รายละเอียด Card 18",
+      "รายละเอียดของ Card 18 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+18"
+      "card18.jpg"
     ]
   },
 
@@ -318,10 +316,10 @@ const cards = [
       "หัวข้อ Card 19",
 
     description:
-      "รายละเอียด Card 19",
+      "รายละเอียดของ Card 19 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+19"
+      "card19.jpg"
     ]
   },
 
@@ -333,10 +331,10 @@ const cards = [
       "หัวข้อ Card 20",
 
     description:
-      "รายละเอียด Card 20",
+      "รายละเอียดของ Card 20 สามารถแก้ไขข้อความตรงนี้ได้",
 
     images: [
-      "https://placehold.co/800x800?text=Card+20"
+      "card20.jpg"
     ]
   }
 
