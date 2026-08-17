@@ -13,11 +13,8 @@
   <title>Friend Card</title>
 
 
-  <!-- LINE LIFF SDK -->
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
-
-  <!-- CARD SETTINGS -->
   <script src="cards.js"></script>
 
 
@@ -29,323 +26,487 @@
 
 
     body {
+
       margin: 0;
+
       background: #f5f6f8;
+
       color: #222;
+
       font-family:
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
         Arial,
         sans-serif;
+
     }
 
 
     /* =========================
        HEADER
-       ========================= */
+    ========================= */
 
     .header {
+
       background: #06c755;
+
       color: white;
+
       padding: 22px 16px;
+
       text-align: center;
+
     }
 
 
     .header h1 {
+
       margin: 0;
+
       font-size: 25px;
+
     }
 
 
     .header p {
+
       margin: 7px 0 0;
+
       font-size: 14px;
+
     }
 
 
     /* =========================
-       MAIN
-       ========================= */
+       CONTAINER
+    ========================= */
 
     .container {
+
       width: 100%;
+
       max-width: 900px;
+
       margin: auto;
+
       padding: 18px;
+
     }
 
 
     /* =========================
        CARD GRID
-       ========================= */
+    ========================= */
 
     .grid {
+
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
       gap: 15px;
+
     }
 
 
     .select-card {
+
       background: white;
+
       border-radius: 16px;
+
       overflow: hidden;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+
+      box-shadow:
+        0 3px 12px
+        rgba(0,0,0,0.08);
+
       cursor: pointer;
-      transition: transform 0.15s;
+
+      transition:
+        transform 0.15s;
+
     }
 
 
     .select-card:active {
-      transform: scale(0.98);
+
+      transform:
+        scale(0.98);
+
     }
 
 
     .select-card img {
+
       display: block;
+
       width: 100%;
+
       aspect-ratio: 1 / 1;
+
       object-fit: cover;
+
       background: #ddd;
+
     }
 
 
     .select-card-content {
+
       padding: 14px;
+
     }
 
 
     .card-number {
+
       color: #888;
+
       font-size: 12px;
+
       margin-bottom: 5px;
+
     }
 
 
     .card-title {
+
       font-size: 17px;
+
       font-weight: 700;
+
       line-height: 1.4;
+
       margin-bottom: 8px;
+
     }
 
 
     .card-count {
+
       color: #06a84f;
+
       font-size: 13px;
+
       font-weight: 600;
+
     }
 
 
     /* =========================
        PREVIEW
-       ========================= */
+    ========================= */
 
     #previewScreen {
+
       display: none;
+
     }
 
 
     .back-button {
+
       border: 0;
+
       background: transparent;
+
       font-size: 16px;
-      padding: 5px 0 15px;
+
+      padding:
+        5px 0 15px;
+
       cursor: pointer;
+
     }
 
 
     .preview-title {
+
       font-size: 22px;
+
       font-weight: 700;
+
       margin-bottom: 15px;
+
     }
 
 
     /* =========================
        MESSAGE CARD
-       ========================= */
+    ========================= */
 
     .message-card {
+
       width: 100%;
+
       max-width: 560px;
+
       margin: auto;
+
       background: white;
+
       border-radius: 18px;
+
       overflow: hidden;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+
+      box-shadow:
+        0 5px 20px
+        rgba(0,0,0,0.12);
+
     }
 
 
     /* =========================
-       PREVIEW IMAGES
-       ========================= */
+       IMAGES
+    ========================= */
 
     .preview-images {
+
       width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
+
     }
 
 
-    .preview-images.one,
-    .preview-images.two {
+    .preview-images.one {
+
       width: 100%;
+
+    }
+
+
+    .preview-images.one img {
+
+      display: block;
+
+      width: 100%;
+
+      aspect-ratio: 1 / 1;
+
+      object-fit: cover;
+
+    }
+
+
+    .preview-images.two {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 0;
+
+      width: 100%;
+
+    }
+
+
+    .preview-images.two img {
+
+      display: block;
+
+      width: 100%;
+
+      aspect-ratio: 1 / 1;
+
+      object-fit: cover;
+
     }
 
 
     .image-link {
+
       display: block;
+
       width: 100%;
-      line-height: 0;
+
       text-decoration: none;
-    }
 
+      line-height: 0;
 
-    .preview-images img {
-      display: block;
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      cursor: pointer;
     }
 
 
     /* =========================
        MESSAGE BODY
-       ========================= */
+    ========================= */
 
     .message-body {
+
       padding: 18px;
+
     }
 
 
     .message-body h2 {
-      margin: 0 0 10px;
+
+      margin:
+        0 0 10px;
+
       font-size: 21px;
+
       line-height: 1.4;
+
     }
 
 
     .message-body p {
+
       margin: 0;
+
       color: #666;
-      font-size: 15px;
-      line-height: 1.65;
+
+      font-size: 14px;
+
+      line-height: 1.7;
+
       white-space: pre-line;
+
     }
 
 
     /* =========================
        BUTTONS
-       ========================= */
+    ========================= */
 
     .action-area {
-      padding: 0 18px 18px;
+
+      padding:
+        0 18px 18px;
+
     }
 
 
     .action-button {
+
       display: block;
+
       width: 100%;
+
       border: 0;
+
       border-radius: 10px;
+
       padding: 13px;
+
       margin-top: 9px;
+
       font-size: 16px;
+
       font-weight: 700;
+
       cursor: pointer;
+
       text-decoration: none;
+
       text-align: center;
+
     }
 
 
     .apply-button {
+
       background: #06c755;
+
       color: white;
+
     }
 
 
     .contact-button {
+
       background: #eeeeee;
+
       color: #222;
+
     }
 
 
     .send-button {
+
       background: #111;
+
       color: white;
+
     }
 
 
     /* =========================
        STATUS
-       ========================= */
+    ========================= */
 
     .status {
-      margin: 15px auto;
+
+      margin:
+        15px auto;
+
       max-width: 560px;
+
       padding: 12px;
+
       border-radius: 10px;
-      background: #fff;
+
+      background: white;
+
       text-align: center;
+
       font-size: 14px;
+
       display: none;
+
     }
 
 
     /* =========================
        MOBILE
-       ========================= */
+    ========================= */
 
     @media (max-width: 600px) {
 
       .container {
+
         padding: 12px;
+
       }
 
 
       .grid {
-        grid-template-columns: 1fr 1fr;
+
+        grid-template-columns:
+          1fr 1fr;
+
         gap: 10px;
+
       }
 
 
       .select-card-content {
+
         padding: 11px;
+
       }
 
 
       .card-title {
+
         font-size: 15px;
+
       }
 
 
       .card-count {
+
         font-size: 12px;
+
       }
 
 
       .message-card {
+
         max-width: 100%;
-      }
 
-
-      .message-body {
-        padding: 16px;
-      }
-
-
-      .message-body h2 {
-        font-size: 19px;
-      }
-
-
-      .message-body p {
-        font-size: 14px;
       }
 
     }
@@ -354,7 +515,10 @@
     @media (max-width: 380px) {
 
       .grid {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
+
       }
 
     }
@@ -369,7 +533,7 @@
 
   <!-- =========================
        HEADER
-       ========================= -->
+  ========================= -->
 
   <div class="header">
 
@@ -384,7 +548,7 @@
 
   <!-- =========================
        CARD LIST
-       ========================= -->
+  ========================= -->
 
   <main
     id="cardListScreen"
@@ -401,7 +565,7 @@
 
   <!-- =========================
        PREVIEW
-       ========================= -->
+  ========================= -->
 
   <main
     id="previewScreen"
@@ -412,12 +576,16 @@
       class="back-button"
       onclick="backToCards()"
     >
+
       ← กลับไปเลือกการ์ด
+
     </button>
 
 
     <div class="preview-title">
+
       Preview
+
     </div>
 
 
@@ -439,25 +607,39 @@
 
 
     /* ==================================================
-       🖼️ รูปทั้งหมดอยู่ในโฟลเดอร์ images
-       ================================================== */
+       🖼️ IMAGE
+    ================================================== */
 
-    const IMAGE_FOLDER = "images";
+    const IMAGE_FOLDER =
+      "images";
 
 
     function getImageUrl(fileName) {
 
+      if (
+        fileName.startsWith("http://") ||
+        fileName.startsWith("https://")
+      ) {
+
+        return fileName;
+
+      }
+
+
       return new URL(
+
         `${IMAGE_FOLDER}/${fileName}`,
+
         window.location.href
+
       ).href;
 
     }
 
 
     /* ==================================================
-       🔢 ระบบนับจำนวน
-       ================================================== */
+       🔢 COUNT
+    ================================================== */
 
     const COUNT_KEY =
       "friend_card_counts_v2";
@@ -468,10 +650,16 @@
       try {
 
         return JSON.parse(
-          localStorage.getItem(COUNT_KEY) || "{}"
+
+          localStorage.getItem(
+            COUNT_KEY
+          ) || "{}"
+
         );
 
-      } catch (error) {
+      }
+
+      catch (error) {
 
         return {};
 
@@ -483,22 +671,34 @@
     function saveCounts(counts) {
 
       localStorage.setItem(
+
         COUNT_KEY,
+
         JSON.stringify(counts)
+
       );
 
     }
 
 
-    function addCount(cardId, amount) {
+    function addCount(
+      cardId,
+      amount
+    ) {
 
       const counts =
         getCounts();
 
 
       counts[cardId] =
-        Number(counts[cardId] || 0)
-        + Number(amount);
+
+        Number(
+          counts[cardId] || 0
+        )
+
+        +
+
+        Number(amount);
 
 
       saveCounts(counts);
@@ -507,8 +707,8 @@
 
 
     /* ==================================================
-       🎴 แสดงการ์ด
-       ================================================== */
+       🎴 RENDER CARDS
+    ================================================== */
 
     function renderCards() {
 
@@ -528,13 +728,16 @@
       cards.forEach(card => {
 
         const count =
+
           Number(
             counts[card.id] || 0
           );
 
 
         const element =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
 
         element.className =
@@ -548,18 +751,28 @@
             alt="Card ${card.id}"
           >
 
-          <div class="select-card-content">
+          <div
+            class="select-card-content"
+          >
 
             <div class="card-number">
+
               CARD ${card.id}
+
             </div>
+
 
             <div class="card-title">
+
               ${escapeHtml(card.title)}
+
             </div>
 
+
             <div class="card-count">
+
               👥 ส่งแล้ว ${count} คน
+
             </div>
 
           </div>
@@ -570,12 +783,16 @@
         element.onclick =
           function() {
 
-            openPreview(card.id);
+            openPreview(
+              card.id
+            );
 
           };
 
 
-        grid.appendChild(element);
+        grid.appendChild(
+          element
+        );
 
       });
 
@@ -583,8 +800,8 @@
 
 
     /* ==================================================
-       👀 Preview
-       ================================================== */
+       👀 PREVIEW
+    ================================================== */
 
     let selectedCardId =
       null;
@@ -616,12 +833,14 @@
 
       document.getElementById(
         "cardListScreen"
-      ).style.display = "none";
+      ).style.display =
+        "none";
 
 
       document.getElementById(
         "previewScreen"
-      ).style.display = "block";
+      ).style.display =
+        "block";
 
 
       const preview =
@@ -631,17 +850,16 @@
 
 
       const imageClass =
+
         card.images.length >= 2
+
           ? "two"
+
           : "one";
 
 
-      /* ----------------------------------------------
-         รูปใน Preview
-         แตะรูป = ไป APPLY_URL
-      ---------------------------------------------- */
-
       const imagesHtml =
+
         card.images
           .slice(0, 2)
           .map(image => {
@@ -668,21 +886,17 @@
             `;
 
           })
+
           .join("");
-
-
-      /* ----------------------------------------------
-         รายละเอียด
-      ---------------------------------------------- */
-
-      const description =
-        card.description || "";
 
 
       preview.innerHTML = `
 
         <div
-          class="preview-images ${imageClass}"
+          class="
+            preview-images
+            ${imageClass}
+          "
         >
 
           ${imagesHtml}
@@ -690,45 +904,72 @@
         </div>
 
 
-        <div class="message-body">
+        <div
+          class="message-body"
+        >
 
           <h2>
-            ${escapeHtml(card.title)}
+
+            ${escapeHtml(
+              card.title
+            )}
+
           </h2>
 
 
           <p>
-            ${escapeHtml(description)}
+
+            ${escapeHtml(
+              card.description || ""
+            )}
+
           </p>
 
         </div>
 
 
-        <div class="action-area">
+        <div
+          class="action-area"
+        >
 
           <a
-            class="action-button apply-button"
+            class="
+              action-button
+              apply-button
+            "
             href="${APPLY_URL}"
             target="_blank"
           >
+
             สมัครสมาชิก
+
           </a>
 
 
           <a
-            class="action-button contact-button"
+            class="
+              action-button
+              contact-button
+            "
             href="${CONTACT_URL}"
             target="_blank"
           >
+
             ติดต่อเรา
+
           </a>
 
 
           <button
-            class="action-button send-button"
+            class="
+              action-button
+              send-button
+            "
             onclick="sendCard()"
           >
+
             📤 ส่งการ์ดนี้
+
           </button>
 
         </div>
@@ -742,8 +983,8 @@
 
 
     /* ==================================================
-       ← กลับ
-       ================================================== */
+       ← BACK
+    ================================================== */
 
     function backToCards() {
 
@@ -753,12 +994,14 @@
 
       document.getElementById(
         "previewScreen"
-      ).style.display = "none";
+      ).style.display =
+        "none";
 
 
       document.getElementById(
         "cardListScreen"
-      ).style.display = "block";
+      ).style.display =
+        "block";
 
 
       hideStatus();
@@ -767,8 +1010,8 @@
 
 
     /* ==================================================
-       📤 ส่ง Flex Card
-       ================================================== */
+       📤 SEND CARD
+    ================================================== */
 
     async function sendCard() {
 
@@ -808,10 +1051,6 @@
         );
 
 
-        /* ----------------------------------------------
-           ตรวจสอบ LIFF
-        ---------------------------------------------- */
-
         if (
           !liff.isInClient() &&
           !liff.isLoggedIn()
@@ -824,10 +1063,6 @@
         }
 
 
-        /* ----------------------------------------------
-           ตรวจสอบ Share Target Picker
-        ---------------------------------------------- */
-
         if (
           !liff.isApiAvailable(
             "shareTargetPicker"
@@ -836,18 +1071,19 @@
 
           hideStatus();
 
+
           alert(
-            "อุปกรณ์หรือสภาพแวดล้อมนี้ไม่รองรับ Share Target Picker"
+
+            "อุปกรณ์หรือสภาพแวดล้อมนี้" +
+            "ไม่รองรับ Share Target Picker"
+
           );
+
 
           return;
 
         }
 
-
-        /* ----------------------------------------------
-           สร้าง Flex Message
-        ---------------------------------------------- */
 
         const flexMessage =
           createFlexMessage(card);
@@ -858,24 +1094,19 @@
         );
 
 
-        /* ----------------------------------------------
-           เปิด Share Target Picker
-        ---------------------------------------------- */
-
         const result =
+
           await liff.shareTargetPicker(
+
             [
               flexMessage
             ]
+
           );
 
 
         hideStatus();
 
-
-        /* ----------------------------------------------
-           บันทึกจำนวนผู้รับ
-        ---------------------------------------------- */
 
         if (
           result &&
@@ -893,10 +1124,11 @@
         }
 
 
-      } catch (error) {
+      }
+
+      catch (error) {
 
         console.error(
-          "Share Target Picker Error:",
           error
         );
 
@@ -905,9 +1137,16 @@
 
 
         alert(
+
           "ไม่สามารถส่งการ์ดได้\n\n" +
+
           "รายละเอียด: " +
-          (error.message || error)
+
+          (
+            error.message ||
+            error
+          )
+
         );
 
       }
@@ -916,33 +1155,18 @@
 
 
     /* ==================================================
-       🎴 สร้าง Flex Message
-       
-       รูป 1:
-       - 1:1
-       - เต็มความกว้าง
-       - แตะรูป → APPLY_URL
-
-       รูป 2:
-       - 1:1
-       - เรียงบน-ล่าง
-       - เต็มความกว้าง
-       - แตะรูป → APPLY_URL
-
-       ด้านล่าง:
-       - หัวข้อ
-       - รายละเอียด
-       - สมัครสมาชิก
-       - ติดต่อเรา
-       ================================================== */
+       🎴 CREATE FLEX
+    ================================================== */
 
     function createFlexMessage(card) {
 
       const imageUrls =
+
         card.images
           .slice(0, 2)
-          .map(image =>
-            getImageUrl(image)
+          .map(
+            image =>
+              getImageUrl(image)
           );
 
 
@@ -951,7 +1175,7 @@
 
       /* =========================
          1 รูป
-         ========================= */
+      ========================= */
 
       if (
         imageUrls.length === 1
@@ -961,19 +1185,25 @@
 
           type: "image",
 
-          url: imageUrls[0],
+          url:
+            imageUrls[0],
 
-          size: "full",
+          size:
+            "full",
 
-          aspectRatio: "1:1",
+          aspectRatio:
+            "1:1",
 
-          aspectMode: "cover",
+          aspectMode:
+            "cover",
 
           action: {
 
-            type: "uri",
+            type:
+              "uri",
 
-            uri: APPLY_URL
+            uri:
+              APPLY_URL
 
           }
 
@@ -984,43 +1214,54 @@
 
       /* =========================
          2 รูป
-         เรียงบน-ล่าง
-         ========================= */
+         บน-ล่าง
+      ========================= */
 
       else {
 
         hero = {
 
-          type: "box",
+          type:
+            "box",
 
-          layout: "vertical",
+          layout:
+            "vertical",
 
-          spacing: "none",
+          spacing:
+            "none",
 
           contents:
 
             imageUrls.map(
               imageUrl => ({
 
-                type: "image",
+                type:
+                  "image",
 
-                url: imageUrl,
+                url:
+                  imageUrl,
 
-                size: "full",
+                size:
+                  "full",
 
-                aspectRatio: "1:1",
+                aspectRatio:
+                  "1:1",
 
-                aspectMode: "cover",
+                aspectMode:
+                  "cover",
 
                 action: {
 
-                  type: "uri",
+                  type:
+                    "uri",
 
-                  uri: APPLY_URL
+                  uri:
+                    APPLY_URL
 
                 }
 
               })
+
             )
 
         };
@@ -1030,75 +1271,80 @@
 
       return {
 
-        type: "flex",
+        type:
+          "flex",
 
         altText:
           card.title,
 
         contents: {
 
-          type: "bubble",
+          type:
+            "bubble",
 
-          size: "mega",
-
-
-          /* =========================
-             รูป
-             ========================= */
-
-          hero: hero,
+          size:
+            "mega",
 
 
-          /* =========================
-             หัวข้อ + รายละเอียด
-             ========================= */
+          hero:
+            hero,
+
 
           body: {
 
-            type: "box",
+            type:
+              "box",
 
-            layout: "vertical",
+            layout:
+              "vertical",
 
-            spacing: "md",
+            spacing:
+              "md",
 
-            paddingAll: "18px",
+            paddingAll:
+              "18px",
 
             contents: [
 
-              /* หัวข้อ */
-
               {
 
-                type: "text",
+                type:
+                  "text",
 
                 text:
                   card.title,
 
-                weight: "bold",
+                weight:
+                  "bold",
 
-                size: "xl",
+                size:
+                  "xl",
 
-                wrap: true
+                wrap:
+                  true
 
               },
 
 
-              /* รายละเอียด */
-
               {
 
-                type: "text",
+                type:
+                  "text",
 
                 text:
                   card.description || "",
 
-                size: "md",
+                size:
+                  "sm",
 
-                color: "#666666",
+                color:
+                  "#666666",
 
-                wrap: true,
+                wrap:
+                  true,
 
-                margin: "md"
+                margin:
+                  "md"
 
               }
 
@@ -1107,33 +1353,37 @@
           },
 
 
-          /* =========================
-             ปุ่ม
-             ========================= */
-
           footer: {
 
-            type: "box",
+            type:
+              "box",
 
-            layout: "vertical",
+            layout:
+              "vertical",
 
-            spacing: "sm",
+            spacing:
+              "sm",
 
-            paddingAll: "16px",
+            paddingAll:
+              "16px",
 
             contents: [
 
               {
 
-                type: "button",
+                type:
+                  "button",
 
-                style: "primary",
+                style:
+                  "primary",
 
-                height: "sm",
+                height:
+                  "sm",
 
                 action: {
 
-                  type: "uri",
+                  type:
+                    "uri",
 
                   label:
                     "สมัครสมาชิก",
@@ -1148,15 +1398,19 @@
 
               {
 
-                type: "button",
+                type:
+                  "button",
 
-                style: "secondary",
+                style:
+                  "secondary",
 
-                height: "sm",
+                height:
+                  "sm",
 
                 action: {
 
-                  type: "uri",
+                  type:
+                    "uri",
 
                   label:
                     "ติดต่อเรา",
@@ -1180,8 +1434,8 @@
 
 
     /* ==================================================
-       🔢 บันทึกจำนวนคน
-       ================================================== */
+       🔢 RECORD COUNT
+    ================================================== */
 
     function recordSentCount() {
 
@@ -1189,7 +1443,10 @@
         prompt(
 
           "ส่งการ์ดนี้ให้กี่คน?\n\n" +
-          "เช่น ถ้าเลือกเพื่อน 20 คน ให้ใส่ 20"
+
+          "เช่น ถ้าเลือกเพื่อน 20 คน " +
+
+          "ให้ใส่ 20"
 
         );
 
@@ -1199,8 +1456,12 @@
       ) {
 
         alert(
-          "ส่งการ์ดแล้ว แต่ยังไม่ได้บันทึกจำนวน"
+
+          "ส่งการ์ดแล้ว " +
+          "แต่ยังไม่ได้บันทึกจำนวน"
+
         );
+
 
         return;
 
@@ -1208,19 +1469,32 @@
 
 
       const amount =
+
         Number(
-          String(answer).trim()
+
+          String(
+            answer
+          ).trim()
+
         );
 
 
       if (
-        !Number.isInteger(amount) ||
+
+        !Number.isInteger(
+          amount
+        )
+
+        ||
+
         amount < 0
+
       ) {
 
         alert(
           "จำนวนไม่ถูกต้อง"
         );
+
 
         return;
 
@@ -1228,8 +1502,11 @@
 
 
       addCount(
+
         selectedCardId,
+
         amount
+
       );
 
 
@@ -1237,17 +1514,21 @@
 
 
       alert(
+
         "บันทึกแล้ว +" +
+
         amount +
+
         " คน"
+
       );
 
     }
 
 
     /* ==================================================
-       🔤 ป้องกัน HTML
-       ================================================== */
+       🔤 ESCAPE HTML
+    ================================================== */
 
     function escapeHtml(text) {
 
@@ -1283,7 +1564,7 @@
 
     /* ==================================================
        ℹ️ STATUS
-       ================================================== */
+    ================================================== */
 
     function showStatus(message) {
 
@@ -1318,8 +1599,8 @@
 
 
     /* ==================================================
-       🚀 เริ่ม LIFF
-       ================================================== */
+       🚀 INIT LIFF
+    ================================================== */
 
     async function initLIFF() {
 
@@ -1337,12 +1618,16 @@
           "LIFF initialized"
         );
 
+      }
 
-      } catch (error) {
+      catch (error) {
 
         console.error(
+
           "LIFF initialization failed:",
+
           error
+
         );
 
       }
@@ -1351,8 +1636,8 @@
 
 
     /* ==================================================
-       🚀 เริ่มระบบ
-       ================================================== */
+       🚀 START
+    ================================================== */
 
     renderCards();
 
